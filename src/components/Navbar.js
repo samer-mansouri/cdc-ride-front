@@ -82,7 +82,7 @@ function classNames(...classes) {
 
 export default function Navbar() {
   return (
-    <Popover className="relative bg-white">
+    <Popover className="sticky top-0 z-50 w-full bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <div className="flex justify-between items-center border-b-2 border-gray-100 py-6 md:justify-start md:space-x-10">
           <div className="flex justify-start lg:w-0 lg:flex-1">
@@ -101,9 +101,9 @@ export default function Navbar() {
             <NavLink to="/" className="text-base font-medium text-gray-500 hover:text-gray-900">
               Accueil
             </NavLink>
-            <a href="#" className="text-base font-medium text-gray-500 hover:text-gray-900">
-              Docs
-            </a>
+            <NavLink to="/trajets" className="text-base font-medium text-gray-500 hover:text-gray-900">
+              Trajets
+            </NavLink>
           </Popover.Group>
           <div className="hidden md:flex items-center justify-end md:flex-1 lg:w-0">
             <NavLink to="/login" className="whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900">

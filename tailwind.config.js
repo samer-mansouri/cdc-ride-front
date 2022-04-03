@@ -3,7 +3,11 @@ module.exports = {
     "./src/**/*.{js,jsx,ts,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      flex: {
+      '2': '2 2 0%'
+      }
+    },
   },
   plugins: [],
 }

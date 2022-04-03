@@ -8,6 +8,7 @@ import {
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import TrajetsList from './pages/TrajetsList';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route exact path="/"><Home /></Route>
         <Route path="/login"><Login /></Route>
         <Route path="/signup"><Register /></Route>
+        <Route path="/trajets"><TrajetsList /></Route>
       </Switch>
     </Router>
   );
