@@ -87,7 +87,7 @@ export default function Navbar() {
         <div className="flex justify-between items-center border-b-2 border-gray-100 py-6 md:justify-start md:space-x-10">
           <div className="flex justify-start lg:w-0 lg:flex-1">
             <NavLink to="/">
-              <h1 className="text-[#ffc65e] font-bold text-2xl">CDC-RIDRE</h1>
+              <h1 className="text-[#ffc65e] font-bold text-2xl">CDC-RIDE</h1>
             </NavLink>
           </div>
           <div className="-mr-2 -my-2 md:hidden">

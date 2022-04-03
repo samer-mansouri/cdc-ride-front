@@ -21,7 +21,7 @@ export default function Login() {
       <div className="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-md w-full space-y-8 my-40">
           <div>
-            <h1 className="text-[#ffc65e] font-bold text-2xl text-center">CDC-RIDRE</h1>
+            <h1 className="text-[#ffc65e] font-bold text-2xl text-center">CDC-RIDE</h1>
             <h2 className="mt-2 text-center text-3xl font-extrabold text-gray-900">Se connecter à votre compte</h2>
          
           </div>
