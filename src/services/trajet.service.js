@@ -25,8 +25,8 @@ class TrajetService {
       return api.put(`/trajets/search`, data)
   }
 
-  getUserPorfile(id){
-    return api.get(`/users/profile/${id}`)
+  getUserProfile(id){
+    return api.get(`/user/${id}`)
   }
 
 

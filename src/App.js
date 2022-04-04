@@ -19,7 +19,7 @@ function App() {
         <Route path="/login"><Login /></Route>
         <Route path="/signup"><Register /></Route>
         <Route path="/trajets"><TrajetsList /></Route>
-        <Route path="/profile"><UserProfile /></Route>
+        <Route path="/profile/:id"><UserProfile /></Route>
       </Switch>
     </Router>
   );

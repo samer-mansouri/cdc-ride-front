@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { NavLink } from 'react-router-dom';
 import Navbar from '../components/Navbar'
 import SimpleSearchForm from '../components/SimpleSearchForm'
 
@@ -434,7 +435,7 @@ function TrajetsList() {
               <div className="flex flex-row">
                 <img src={trajet.user[0].picture} className="w-14 h-14" style={{borderRadius:"50%"}}/>
                 <div className="pt-2 ml-2">
-                <h4 className="">{trajet.user[0].firstName} {trajet.user[0].lastName}</h4>
+                <h4 className=""><NavLink to={`profile/${trajet.user[0]._id}`}>{trajet.user[0].firstName} {trajet.user[0].lastName}</NavLink></h4>
                 <h5 className="text-muted text-gray-400"><i>Publiée le 12/27/2020</i></h5>
                 </div>
               </div>

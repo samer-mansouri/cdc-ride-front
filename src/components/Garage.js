@@ -1,38 +1,8 @@
 import React from 'react'
 
-const vehicules = [
-    {
-        userId: 1,
-        mark: "Mercedes",
-        model: "C220",
-        color: "Black",
-        year: 2013,
-        category: "Luxury",
-        motorization: "Diesel",
-        power: "250HP"
-    },
-    {
-        userId: 1,
-        mark: "Mercedes",
-        model: "C220",
-        color: "Black",
-        year: 2013,
-        category: "Luxury",
-        motorization: "Diesel",
-        power: "250HP"
-    },
-    {
-        userId: 1,
-        mark: "Mercedes",
-        model: "C220",
-        color: "Black",
-        year: 2013,
-        category: "Luxury",
-        motorization: "Diesel",
-        power: "250HP"
-    },
-]
-function Garage() {
+function Garage(props) {
+    console.log(props)
+    const { vehicules } = props;
   return (
     <>
         {vehicules.map((vehicule, index) => {

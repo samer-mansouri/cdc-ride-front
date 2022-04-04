@@ -14,7 +14,7 @@
   }
   ```
 */
-import { Fragment } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import { Menu, Popover, Transition } from '@headlessui/react'
 import {
   ArrowNarrowLeftIcon,
@@ -29,17 +29,11 @@ import {
 import { BellIcon, MenuIcon, XIcon } from '@heroicons/react/outline'
 import Navbar from '../components/Navbar'
 import Garage from '../components/Garage'
+import { useParams } from 'react-router-dom'
+import TrajetService from '../services/trajet.service'
+import Moment from 'react-moment';
 
-const user = {
-  firstName: 'Samer',
-  lastName: 'Mansouri',
-  dateOfBirth: '01/01/1990',
-  email: 'whitney@example.com',
-  phoneNumber: 55784124,
-  permis: 'BC2A',
-  picture:
-    'https://images.unsplash.com/photo-1517365830460-955ce3ccd263?ixlib=rb-=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=8&w=256&h=256&q=80',
-}
+
 const navigation = [
   { name: 'Dashboard', href: '#' },
   { name: 'Jobs', href: '#' },
@@ -138,6 +132,29 @@ function classNames(...classes) {
 }
 
 export default function UserProfile() {
+
+  const [user, setUser] = useState([])
+  const [load, setLoad] = useState(true)
+
+  const { id } = useParams();
+  
+  const getUser = () =>{
+    TrajetService.getUserProfile(id)
+    .then(res => {
+      console.log(res.data)
+      setUser(res.data)
+    })
+    .catch(error => {
+      console.log(error)
+    })
+    .finally(() => setLoad(false))
+  }
+
+  useEffect(() => {
+    getUser();
+    console.log(user.garage)
+  }, [])
+
   return (
     <>
       {/*
@@ -158,7 +175,7 @@ export default function UserProfile() {
                 <div className="relative">
                   <img
                     className="h-16 w-16 rounded-full"
-                    src="https://images.unsplash.com/photo-1463453091185-61582044d556?ixlib=rb-=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=8&w=1024&h=1024&q=80"
+                    src={user.picture}
                     alt=""
                   />
                   <span className="absolute inset-0 shadow-inner rounded-full" aria-hidden="true" />
@@ -167,7 +184,10 @@ export default function UserProfile() {
               <div>
                 <h1 className="text-2xl font-bold text-gray-900">{user.firstName} {user.lastName}</h1>
                 <p className="text-sm font-medium text-gray-500">
-                  Inscrit le 12/25/2020
+                  Inscrit le {' '} 
+                  <Moment format="DD/MM/YYYY">
+                    {user.createdAt}
+                  </Moment>
                 </p>
               </div>
             </div>
@@ -199,7 +219,7 @@ export default function UserProfile() {
                       </div>
                       <div className="sm:col-span-1">
                         <dt className="text-sm font-medium text-gray-500">Date de naissance</dt>
-                        <dd className="mt-1 text-sm text-gray-900">{user.dateOfBirth}</dd>
+                        <dd className="mt-1 text-sm text-gray-900"><Moment format="DD/MM/YYYY">{user.dateOfBirth}</Moment></dd>
                       </div>
                      
                     
@@ -220,7 +240,7 @@ export default function UserProfile() {
 
                 {/* Activity Feed */}
                 <div className="mt-6 flow-root">
-                  <Garage />
+                {!load ? <Garage vehicules={user.garage}/> : '' } 
                 </div>
               </div>
             </section>
