@@ -26,6 +26,7 @@ export default function Register() {
             address: '',
             phoneNumber: '',
             email: '',
+            gender: '',
             permis:'',
             password: '',
             password2: '',
@@ -114,6 +115,23 @@ export default function Register() {
                   className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-[#ffc65e] focus:border-[#ffc65e] focus:z-10 sm:text-sm"
                   placeholder="Adresse email"
                 />
+              </div>
+              <div>
+                <label htmlFor="gender" className="sr-only">
+                  Genre
+                </label>
+                <Field
+                  id="gender"
+                  as="select"
+                  name="gender"
+                  required
+                  className="appearance-none rounded-none bg-white relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900  focus:outline-none focus:ring-[#ffc65e] focus:border-[#ffc65e] focus:z-10 sm:text-sm"
+                  placeholder="Genre"
+                >
+                  <option value="" className="text-gray-500">Genre</option>
+                  <option value="Male" className="text-gray-500">Homme</option>
+                 <option value="Female" className="text-gray-500">Femme</option>
+                </Field>
               </div>
               <div>
                 <label htmlFor="permis" className="sr-only">
