@@ -17,6 +17,7 @@ import {
 } from '@heroicons/react/outline'
 import { ChevronDownIcon } from '@heroicons/react/solid'
 import { NavLink } from 'react-router-dom'
+import TokenService from '../services/token.service'
 
 const solutions = [
   {
@@ -105,17 +106,22 @@ export default function Navbar() {
               Trajets
             </NavLink>
           </Popover.Group>
-          <div className="hidden md:flex items-center justify-end md:flex-1 lg:w-0">
-            <NavLink to="/login" className="whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900">
-              Se connecter
-            </NavLink>
-            <NavLink
-              to="/signup"
-              className="ml-8 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-[#ffc65e] hover:bg-[#e0ae51]"
-            >
-              S'inscrire
-            </NavLink>
-          </div>
+         {
+           TokenService.getLocalAccessToken() && TokenService.getLocalRefreshToken() && TokenService.getUser()
+           ? ''
+           : 
+           <div className="hidden md:flex items-center justify-end md:flex-1 lg:w-0">
+           <NavLink to="/login" className="whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900">
+             Se connecter
+           </NavLink>
+           <NavLink
+             to="/signup"
+             className="ml-8 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-[#ffc65e] hover:bg-[#e0ae51]"
+           >
+             S'inscrire
+           </NavLink>
+         </div>
+         }
         </div>
       </div>
 

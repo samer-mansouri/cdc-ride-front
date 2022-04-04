@@ -12,6 +12,7 @@ instance.interceptors.request.use(
   (config) => {
     const token = TokenService.getLocalAccessToken();
     if (token) {
+      console.log(token)
       config.headers["Authorization"] = 'Bearer ' + token;  // for Spring Boot back-end
       //config.headers["x-access-token"] = token; // for Node.js Express back-end
     }
@@ -30,12 +31,12 @@ instance.interceptors.response.use(
     const originalConfig = err.config;
     if (originalConfig.url !== "/login" && err.response) {
       // Access Token was expired
-      if (err.response.status === 401 && !originalConfig._retry) {
+      if (err.response.status === 403 && !originalConfig._retry) {
         originalConfig._retry = true;
 
         try {
           const rs = await instance.post("/refresh", {
-            refresh: TokenService.getLocalRefreshToken(),
+            refreshToken: TokenService.getLocalRefreshToken(),
           });
 
           const accessToken = rs.data.accessToken;

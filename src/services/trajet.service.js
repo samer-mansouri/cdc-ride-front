@@ -22,7 +22,7 @@ class TrajetService {
   }
 
   trajetsSimpleSearch(data){
-      return api.put(`/trajets/search`, data)
+      return api.post(`/trajets/search`, data)
   }
 
   getUserProfile(id){

@@ -1,25 +1,44 @@
-import { SearchIcon } from '@heroicons/react/solid'
+import { BackspaceIcon, SearchIcon } from '@heroicons/react/solid'
 import Navbar from '../components/Navbar'
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import AuthService from '../services/auth.service';
+import TrajetService from '../services/trajet.service';
+import { useState } from 'react';
 
 
-export default function SimpleSearchForm() {
+export default function SimpleSearchForm({ onFetch, reload }) {
 
+  const [show, setShow] = useState(false)
+
+
+
+  const toggleShow = () => {
+    show ? setShow(false) : setShow(true)
+  }
+
+  const searchTrajet = (values) => {
+    TrajetService.trajetsSimpleSearch(values)
+    .then(res => {
+      console.log(res.data)
+      onFetch(res.data)
+      toggleShow()
+    })
+    .catch(error => console.log(error))
+  }
 
   return (
     <>
       <div className="flex items-center justify-center py-5 px-4 sm:px-6 lg:px-8">
         <div className="space-y-8">
-
+         
         <Formik
         initialValues={{
             placeOfDeparture: '',
             placeOfDestination: '',
             departureTime: '',
             }}
-            onSubmit={values => console.log(values)}
+            onSubmit={values => searchTrajet(values)}
         >
             
           <Form className="grid xl:grid-cols-2 lg:grid-cols-1 mt-2 xl:ml-80" action="#" method="POST">
@@ -71,7 +90,13 @@ export default function SimpleSearchForm() {
             </div>
           </Form>
         </Formik>
-
+        {
+          show ? 
+          <button 
+            onClick={() => {reload(); toggleShow();}}
+          className="text-white border-0 py-2 px-4 bg-[#ffc65e] hover:bg-[#e0ae51] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#ffc65e] rounded">
+          <BackspaceIcon className="inline-block h-5 w-5 mb-1 text-[#fdf2c5] group-hover:text-[#ffc65e]" aria-hidden="true" /> TOUT LES TRAJETS</button> : ''
+        }
         </div>
       </div>
     </>

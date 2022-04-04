@@ -165,7 +165,7 @@ export default function UserProfile() {
         <body class="h-full">
         ```
       */}
-      <div className="min-h-full">
+      <div className="min-h-full bg-gray-100 h-screen">
         <Navbar />
         <main className="py-10">
           {/* Page header */}
@@ -198,7 +198,7 @@ export default function UserProfile() {
               {/* Description list*/}
               <section aria-labelledby="applicant-information-title">
                 <div className="bg-white shadow sm:rounded-lg">
-                  <div className="px-4 py-5 sm:px-6">
+                  <div className="px-4 py-5 sm:px-6" >
                     <h2 id="applicant-information-title" className="text-lg leading-6 font-medium text-gray-900">
                       Informations
                     </h2>
