@@ -25,10 +25,26 @@ class TrajetService {
       return api.post(`/trajets/search`, data)
   }
 
+
+  trajetDetailledSearch(data){
+    return api.post(`/trajets/detsearch`, data)
+  }
+
   getUserProfile(id){
     return api.get(`/user/${id}`)
   }
 
+  addCar(data){
+    return api.post(`/vehicule`, data)
+  }
+
+  deleteCar(id){
+    return api.delete(`/vehicule/${id}`)
+  }
+
+  updateCar(id, data){
+    return api.put(`/vehicule/${id}`, data)
+  }
 
   getUserQuestions(id){
     return api.get(`/forum/userquest/${id}`)

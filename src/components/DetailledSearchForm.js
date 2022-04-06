@@ -7,7 +7,7 @@ import TrajetService from '../services/trajet.service';
 import { useState } from 'react';
 
 
-export default function SimpleSearchForm({ onFetch, reload }) {
+export default function DetailledSearchForm({ onFetch, reload }) {
 
   const [show, setShow] = useState(false)
 
@@ -18,7 +18,7 @@ export default function SimpleSearchForm({ onFetch, reload }) {
   }
 
   const searchTrajet = (values) => {
-    TrajetService.trajetsSimpleSearch(values)
+    TrajetService.trajetDetailledSearch(values)
     .then(res => {
       console.log(res.data)
       onFetch(res.data)
@@ -37,6 +37,8 @@ export default function SimpleSearchForm({ onFetch, reload }) {
             placeOfDeparture: '',
             placeOfDestination: '',
             departureTime: '',
+            pathTaken: '',
+            userGender: '',
             }}
             onSubmit={values => searchTrajet(values)}
         >
@@ -66,6 +68,16 @@ export default function SimpleSearchForm({ onFetch, reload }) {
               </div>
               <div>
                 <Field
+                  id="pathTaken"
+                  name="pathTaken"
+                  type="text"
+                  required
+                  className="appearance-none rounded-none mb-2 block w-56 px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded focus:outline-none focus:ring-[#ffc65e] focus:border-[#ffc65e] focus:z-10 sm:text-sm"
+                  placeholder="Trajectoire effectué"
+                />
+              </div>
+              <div>
+                <Field
                   id="hour"
                   name="departureTime"
                   type="time"
@@ -73,6 +85,23 @@ export default function SimpleSearchForm({ onFetch, reload }) {
                   className="appearance-none rounded-none mb-2 block w-56 px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded focus:outline-none focus:ring-[#ffc65e] focus:border-[#ffc65e] focus:z-10 sm:text-sm"
                   placeholder="Heure de départ"
                 />
+              </div>
+              <div>
+                <label htmlFor="gender" className="sr-only">
+                  Genre
+                </label>
+                <Field
+                  id="gender"
+                  as="select"
+                  name="userGender"
+                  required
+                  className="appearance-none rounded-none bg-white relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900  focus:outline-none focus:ring-[#ffc65e] focus:border-[#ffc65e] focus:z-10 sm:text-sm"
+                  placeholder="Sexe du conducteur"
+                >
+                  <option value="" className="text-gray-500">Sexe du conducteur</option>
+                  <option value="Male" className="text-gray-500">Homme</option>
+                 <option value="Female" className="text-gray-500">Femme</option>
+                </Field>
               </div>
             </div>
 

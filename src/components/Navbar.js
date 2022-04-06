@@ -14,6 +14,10 @@ import {
   SupportIcon,
   ViewGridIcon,
   XIcon,
+  LogoutIcon,
+  MapIcon,
+  UserIcon,
+  HomeIcon,
 } from '@heroicons/react/outline'
 import { ChevronDownIcon } from '@heroicons/react/solid'
 import { NavLink } from 'react-router-dom'
@@ -88,7 +92,7 @@ export default function Navbar() {
         <div className="flex justify-between items-center border-b-2 border-gray-100 py-6 md:justify-start md:space-x-10">
           <div className="flex justify-start lg:w-0 lg:flex-1">
             <NavLink to="/">
-              <h1 className="text-[#ffc65e] font-bold text-2xl">CDC-RIDE</h1>
+              <h1 className="text-[#ffc65e] font-bold text-2xl">RIDE</h1>
             </NavLink>
           </div>
           <div className="-mr-2 -my-2 md:hidden">
@@ -100,15 +104,33 @@ export default function Navbar() {
           <Popover.Group as="nav" className="hidden md:flex space-x-10">
             
             <NavLink to="/" className="text-base font-medium text-gray-500 hover:text-gray-900">
-              Accueil
+             Accueil
             </NavLink>
             <NavLink to="/trajets" className="text-base font-medium text-gray-500 hover:text-gray-900">
-              Trajets
+            Trajets
             </NavLink>
-          </Popover.Group>
-         {
+            
+            {
            TokenService.getLocalAccessToken() && TokenService.getLocalRefreshToken() && TokenService.getUser()
-           ? ''
+           ? 
+           <>
+           <NavLink to={'/profile/' + TokenService.getCurrentUserId()} className="text-base font-medium text-gray-500 hover:text-gray-900">
+            <UserIcon className="h-6 w-6 inline mb-1" aria-hidden="true" /> Profile
+            </NavLink>
+            <NavLink to="/logout" className="text-base font-medium text-gray-500 hover:text-gray-900">
+            <LogoutIcon className="h-6 w-6 inline mb-1" aria-hidden="true" /> Se déconnecter
+            </NavLink></>
+           : 
+          ''
+         }
+
+          </Popover.Group>
+        
+
+          {
+           TokenService.getLocalAccessToken() && TokenService.getLocalRefreshToken() && TokenService.getUser()
+           ? 
+          ''
            : 
            <div className="hidden md:flex items-center justify-end md:flex-1 lg:w-0">
            <NavLink to="/login" className="whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900">
@@ -139,7 +161,7 @@ export default function Navbar() {
             <div className="pt-5 pb-6 px-5">
               <div className="flex items-center justify-between">
                 <div>
-                <h1 className="text-[#ffc65e] font-bold text-2xl">CDC-RIDRE</h1>
+                <h1 className="text-[#ffc65e] font-bold text-2xl">RIDRE</h1>
 
                 </div>
                 <div className="-mr-2">

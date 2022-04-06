@@ -14,7 +14,7 @@ export default function Register() {
       <div className="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-md w-full space-y-8 lg:my-24 md:my-16">
           <div>
-            <h1 className="text-[#ffc65e] font-bold text-2xl text-center">CDC-RIDE</h1>
+            <h1 className="text-[#ffc65e] font-bold text-2xl text-center">RIDE</h1>
             <h2 className="mt-2 text-center text-3xl font-extrabold text-gray-900">Créer un nouveau compte</h2>
          
           </div>

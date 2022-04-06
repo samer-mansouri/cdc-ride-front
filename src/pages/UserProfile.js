@@ -25,6 +25,8 @@ import {
   SearchIcon,
   ThumbUpIcon,
   UserIcon,
+  PlusIcon,
+  UsersIcon,
 } from '@heroicons/react/solid'
 import { BellIcon, MenuIcon, XIcon } from '@heroicons/react/outline'
 import Navbar from '../components/Navbar'
@@ -32,6 +34,8 @@ import Garage from '../components/Garage'
 import { useParams } from 'react-router-dom'
 import TrajetService from '../services/trajet.service'
 import Moment from 'react-moment';
+import TokenService from '../services/token.service'
+import AddCarModal from '../components/AddCarModal'
 
 
 const navigation = [
@@ -131,10 +135,38 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
-export default function UserProfile() {
+export default function UserProfile(props) {
 
   const [user, setUser] = useState([])
+  const [userGarage, setUserGarage] = useState([])
   const [load, setLoad] = useState(true)
+
+  const updateUserGarage = (car) => {
+    setUserGarage(prevState => [...prevState, car])
+    console.log(userGarage)
+  }
+
+  const updateUserGarageOnDelete = (garage) => {
+    setUserGarage(garage)
+    console.log(userGarage)
+  }
+
+  const updateUserGarageOnUpdate = (car) => {
+    const index = userGarage.findIndex(x => x._id === car._id);
+    
+    const newArr = [...userGarage];
+    newArr[index] = car;
+    console.log(index)
+    console.log(newArr);
+    setUserGarage(newArr);
+  }
+
+
+  const [openModal, setOpenModal] = useState(false)
+
+  const toggleOpenModal = () => {
+    openModal ? setOpenModal(false) : setOpenModal(true)
+  }
 
   const { id } = useParams();
   
@@ -143,6 +175,7 @@ export default function UserProfile() {
     .then(res => {
       console.log(res.data)
       setUser(res.data)
+      setUserGarage(res.data.garage)
     })
     .catch(error => {
       console.log(error)
@@ -153,7 +186,7 @@ export default function UserProfile() {
   useEffect(() => {
     getUser();
     console.log(user.garage)
-  }, [])
+  }, [id])
 
   return (
     <>
@@ -165,6 +198,14 @@ export default function UserProfile() {
         <body class="h-full">
         ```
       */}
+      <AddCarModal 
+      openModal={openModal}
+      toggleOpenModal={toggleOpenModal}
+      updateUserGarage={updateUserGarage}
+      type="add"
+      car={null}
+      updateUserGarageOnUpdate={updateUserGarageOnUpdate}
+      />
       <div className="min-h-full bg-gray-100 h-screen">
         <Navbar />
         <main className="py-10">
@@ -198,10 +239,24 @@ export default function UserProfile() {
               {/* Description list*/}
               <section aria-labelledby="applicant-information-title">
                 <div className="bg-white shadow sm:rounded-lg">
-                  <div className="px-4 py-5 sm:px-6" >
-                    <h2 id="applicant-information-title" className="text-lg leading-6 font-medium text-gray-900">
+                  <div className="flex px-4 py-5 sm:px-6" >
+                    <h2 id="applicant-information-title" className="text-lg leading-6 font-medium text-gray-900 mr-48">
                       Informations
                     </h2>
+                    {
+                  TokenService.getLocalAccessToken() && TokenService.getLocalRefreshToken() && TokenService.getUser() && TokenService.getCurrentUserId() == id
+                  ?
+                  <button
+                type="submit"
+                className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-[#ffc65e] hover:bg-[#e0ae51] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#ffc65e]"
+              >
+                <span className="absolute left-0 inset-y-0 flex items-center pl-3">
+                  <UsersIcon className="h-5 w-5 text-[#fdf2c5] group-hover:text-[#ffc65e]" aria-hidden="true" />{''}
+                </span>MODIFIER LE PROFILE
+              </button>
+                  :
+                  ''
+                }
                   </div>
                   <div className="border-t border-gray-200 px-4 py-5 sm:px-6">
                     <dl className="grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2">
@@ -227,20 +282,42 @@ export default function UserProfile() {
                   </div>
                 </div>
               </section>
-
+              
               {/* Comments*/}
            
             </div>
 
             <section aria-labelledby="timeline-title" className="lg:col-start-3 lg:col-span-1">
               <div className="bg-white px-4 py-5 shadow-md sm:rounded-lg sm:px-6">
-                <h2 id="timeline-title" className="text-lg font-medium text-gray-900">
+                <div className="flex">
+                <h2 id="timeline-title" className="mr-24 text-lg font-medium text-gray-900">
                   Garage
                 </h2>
-
+                {
+                  TokenService.getLocalAccessToken() && TokenService.getLocalRefreshToken() && TokenService.getUser() && TokenService.getCurrentUserId() == id
+                  ?
+                  <button
+                type="submit"
+                onClick={() =>  setOpenModal(true)}
+                className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-[#ffc65e] hover:bg-[#e0ae51] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#ffc65e]"
+              >
+                <span className="ml-4">
+                <span className="absolute left-0 inset-y-0 flex items-center pl-3">
+                  <PlusIcon className="h-5 w-5 text-[#fdf2c5] group-hover:text-[#ffc65e]" aria-hidden="true" />{''}
+                </span>AJOUTER VOITURE
+                </span>
+              </button>
+                  :
+                  ''
+                }
+              </div>
                 {/* Activity Feed */}
                 <div className="mt-6 flow-root">
-                {!load ? <Garage vehicules={user.garage}/> : '' } 
+                {!load ? <Garage vehicules={userGarage}
+                updateUserGarage={updateUserGarageOnDelete}
+                updateUserGarageOnUpdate={updateUserGarageOnUpdate}
+                userId={id}
+                /> : '' } 
                 </div>
               </div>
             </section>

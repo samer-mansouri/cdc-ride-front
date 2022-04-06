@@ -2,415 +2,25 @@ import React, { useEffect, useState } from 'react'
 import Moment from 'react-moment';
 import { NavLink } from 'react-router-dom';
 import ExclamationAlert from '../components/ExclamationAlert';
+import { SearchIcon } from '@heroicons/react/solid';
 import Navbar from '../components/Navbar'
 import SimpleSearchForm from '../components/SimpleSearchForm'
 
 import TrajetService from '../services/trajet.service';
+import DetailledSearchForm from '../components/DetailledSearchForm';
+import TrajetAnnonce from '../components/TrajetAnnonce';
 
-const trajets = [
-    {
-        userId: 1,
-        vehiculeId: 1,
-        placeOfDeparture: "Tunis",
-        placeOfDestination: "Nabeul",
-        departureTime: "11:00",
-        pathTaken: "Tunis-Nabeul",
-        availableSeats: 4,
-        price: 10,
-        phoneNumber: 557489654,
-    },
-    {
-      userId: 1,
-      vehiculeId: 1,
-      placeOfDeparture: "Tunis",
-      placeOfDestination: "Nabeul",
-      departureTime: "11:00",
-      pathTaken: "Tunis-Nabeul",
-      availableSeats: 4,
-      price: 10,
-      phoneNumber: 557489654,
-  },
-  {
-    userId: 1,
-    vehiculeId: 1,
-    placeOfDeparture: "Tunis",
-    placeOfDestination: "Nabeul",
-    departureTime: "11:00",
-    pathTaken: "Tunis-Nabeul",
-    availableSeats: 4,
-    price: 10,
-    phoneNumber: 557489654,
-  },
-  {
-    userId: 1,
-    vehiculeId: 1,
-    placeOfDeparture: "Tunis",
-    placeOfDestination: "Nabeul",
-    departureTime: "11:00",
-    pathTaken: "Tunis-Nabeul",
-    availableSeats: 4,
-    price: 10,
-    phoneNumber: 557489654,
-  },
-  {
-    userId: 1,
-    vehiculeId: 1,
-    placeOfDeparture: "Tunis",
-    placeOfDestination: "Nabeul",
-    departureTime: "11:00",
-    pathTaken: "Tunis-Nabeul",
-    availableSeats: 4,
-    price: 10,
-    phoneNumber: 557489654,
-},
-{
-  userId: 1,
-  vehiculeId: 1,
-  placeOfDeparture: "Tunis",
-  placeOfDestination: "Nabeul",
-  departureTime: "11:00",
-  pathTaken: "Tunis-Nabeul",
-  availableSeats: 4,
-  price: 10,
-  phoneNumber: 557489654,
-},
-{
-userId: 1,
-vehiculeId: 1,
-placeOfDeparture: "Tunis",
-placeOfDestination: "Nabeul",
-departureTime: "11:00",
-pathTaken: "Tunis-Nabeul",
-availableSeats: 4,
-price: 10,
-phoneNumber: 557489654,
-},
-{
-userId: 1,
-vehiculeId: 1,
-placeOfDeparture: "Tunis",
-placeOfDestination: "Nabeul",
-departureTime: "11:00",
-pathTaken: "Tunis-Nabeul",
-availableSeats: 4,
-price: 10,
-phoneNumber: 557489654,
-},
-{
-  userId: 1,
-  vehiculeId: 1,
-  placeOfDeparture: "Tunis",
-  placeOfDestination: "Nabeul",
-  departureTime: "11:00",
-  pathTaken: "Tunis-Nabeul",
-  availableSeats: 4,
-  price: 10,
-  phoneNumber: 557489654,
-},
-{
-userId: 1,
-vehiculeId: 1,
-placeOfDeparture: "Tunis",
-placeOfDestination: "Nabeul",
-departureTime: "11:00",
-pathTaken: "Tunis-Nabeul",
-availableSeats: 4,
-price: 10,
-phoneNumber: 557489654,
-},
-{
-userId: 1,
-vehiculeId: 1,
-placeOfDeparture: "Tunis",
-placeOfDestination: "Nabeul",
-departureTime: "11:00",
-pathTaken: "Tunis-Nabeul",
-availableSeats: 4,
-price: 10,
-phoneNumber: 557489654,
-},
-{
-userId: 1,
-vehiculeId: 1,
-placeOfDeparture: "Tunis",
-placeOfDestination: "Nabeul",
-departureTime: "11:00",
-pathTaken: "Tunis-Nabeul",
-availableSeats: 4,
-price: 10,
-phoneNumber: 557489654,
-},
-{
-  userId: 1,
-  vehiculeId: 1,
-  placeOfDeparture: "Tunis",
-  placeOfDestination: "Nabeul",
-  departureTime: "11:00",
-  pathTaken: "Tunis-Nabeul",
-  availableSeats: 4,
-  price: 10,
-  phoneNumber: 557489654,
-},
-{
-userId: 1,
-vehiculeId: 1,
-placeOfDeparture: "Tunis",
-placeOfDestination: "Nabeul",
-departureTime: "11:00",
-pathTaken: "Tunis-Nabeul",
-availableSeats: 4,
-price: 10,
-phoneNumber: 557489654,
-},
-{
-userId: 1,
-vehiculeId: 1,
-placeOfDeparture: "Tunis",
-placeOfDestination: "Nabeul",
-departureTime: "11:00",
-pathTaken: "Tunis-Nabeul",
-availableSeats: 4,
-price: 10,
-phoneNumber: 557489654,
-},
-{
-userId: 1,
-vehiculeId: 1,
-placeOfDeparture: "Tunis",
-placeOfDestination: "Nabeul",
-departureTime: "11:00",
-pathTaken: "Tunis-Nabeul",
-availableSeats: 4,
-price: 10,
-phoneNumber: 557489654,
-},
-{
-  userId: 1,
-  vehiculeId: 1,
-  placeOfDeparture: "Tunis",
-  placeOfDestination: "Nabeul",
-  departureTime: "11:00",
-  pathTaken: "Tunis-Nabeul",
-  availableSeats: 4,
-  price: 10,
-  phoneNumber: 557489654,
-},
-{
-userId: 1,
-vehiculeId: 1,
-placeOfDeparture: "Tunis",
-placeOfDestination: "Nabeul",
-departureTime: "11:00",
-pathTaken: "Tunis-Nabeul",
-availableSeats: 4,
-price: 10,
-phoneNumber: 557489654,
-},
-{
-userId: 1,
-vehiculeId: 1,
-placeOfDeparture: "Tunis",
-placeOfDestination: "Nabeul",
-departureTime: "11:00",
-pathTaken: "Tunis-Nabeul",
-availableSeats: 4,
-price: 10,
-phoneNumber: 557489654,
-},
-{
-userId: 1,
-vehiculeId: 1,
-placeOfDeparture: "Tunis",
-placeOfDestination: "Nabeul",
-departureTime: "11:00",
-pathTaken: "Tunis-Nabeul",
-availableSeats: 4,
-price: 10,
-phoneNumber: 557489654,
-},
-{
-  userId: 1,
-  vehiculeId: 1,
-  placeOfDeparture: "Tunis",
-  placeOfDestination: "Nabeul",
-  departureTime: "11:00",
-  pathTaken: "Tunis-Nabeul",
-  availableSeats: 4,
-  price: 10,
-  phoneNumber: 557489654,
-},
-{
-userId: 1,
-vehiculeId: 1,
-placeOfDeparture: "Tunis",
-placeOfDestination: "Nabeul",
-departureTime: "11:00",
-pathTaken: "Tunis-Nabeul",
-availableSeats: 4,
-price: 10,
-phoneNumber: 557489654,
-},
-{
-userId: 1,
-vehiculeId: 1,
-placeOfDeparture: "Tunis",
-placeOfDestination: "Nabeul",
-departureTime: "11:00",
-pathTaken: "Tunis-Nabeul",
-availableSeats: 4,
-price: 10,
-phoneNumber: 557489654,
-},
-{
-userId: 1,
-vehiculeId: 1,
-placeOfDeparture: "Tunis",
-placeOfDestination: "Nabeul",
-departureTime: "11:00",
-pathTaken: "Tunis-Nabeul",
-availableSeats: 4,
-price: 10,
-phoneNumber: 557489654,
-},
-{
-  userId: 1,
-  vehiculeId: 1,
-  placeOfDeparture: "Tunis",
-  placeOfDestination: "Nabeul",
-  departureTime: "11:00",
-  pathTaken: "Tunis-Nabeul",
-  availableSeats: 4,
-  price: 10,
-  phoneNumber: 557489654,
-},
-{
-userId: 1,
-vehiculeId: 1,
-placeOfDeparture: "Tunis",
-placeOfDestination: "Nabeul",
-departureTime: "11:00",
-pathTaken: "Tunis-Nabeul",
-availableSeats: 4,
-price: 10,
-phoneNumber: 557489654,
-},
-{
-userId: 1,
-vehiculeId: 1,
-placeOfDeparture: "Tunis",
-placeOfDestination: "Nabeul",
-departureTime: "11:00",
-pathTaken: "Tunis-Nabeul",
-availableSeats: 4,
-price: 10,
-phoneNumber: 557489654,
-},
-{
-userId: 1,
-vehiculeId: 1,
-placeOfDeparture: "Tunis",
-placeOfDestination: "Nabeul",
-departureTime: "11:00",
-pathTaken: "Tunis-Nabeul",
-availableSeats: 4,
-price: 10,
-phoneNumber: 557489654,
-},
-{
-  userId: 1,
-  vehiculeId: 1,
-  placeOfDeparture: "Tunis",
-  placeOfDestination: "Nabeul",
-  departureTime: "11:00",
-  pathTaken: "Tunis-Nabeul",
-  availableSeats: 4,
-  price: 10,
-  phoneNumber: 557489654,
-},
-{
-userId: 1,
-vehiculeId: 1,
-placeOfDeparture: "Tunis",
-placeOfDestination: "Nabeul",
-departureTime: "11:00",
-pathTaken: "Tunis-Nabeul",
-availableSeats: 4,
-price: 10,
-phoneNumber: 557489654,
-},
-{
-userId: 1,
-vehiculeId: 1,
-placeOfDeparture: "Tunis",
-placeOfDestination: "Nabeul",
-departureTime: "11:00",
-pathTaken: "Tunis-Nabeul",
-availableSeats: 4,
-price: 10,
-phoneNumber: 557489654,
-},
-{
-userId: 1,
-vehiculeId: 1,
-placeOfDeparture: "Tunis",
-placeOfDestination: "Nabeul",
-departureTime: "11:00",
-pathTaken: "Tunis-Nabeul",
-availableSeats: 4,
-price: 10,
-phoneNumber: 557489654,
-},
-{
-  userId: 1,
-  vehiculeId: 1,
-  placeOfDeparture: "Tunis",
-  placeOfDestination: "Nabeul",
-  departureTime: "11:00",
-  pathTaken: "Tunis-Nabeul",
-  availableSeats: 4,
-  price: 10,
-  phoneNumber: 557489654,
-},
-{
-userId: 1,
-vehiculeId: 1,
-placeOfDeparture: "Tunis",
-placeOfDestination: "Nabeul",
-departureTime: "11:00",
-pathTaken: "Tunis-Nabeul",
-availableSeats: 4,
-price: 10,
-phoneNumber: 557489654,
-},
-{
-userId: 1,
-vehiculeId: 1,
-placeOfDeparture: "Tunis",
-placeOfDestination: "Nabeul",
-departureTime: "11:00",
-pathTaken: "Tunis-Nabeul",
-availableSeats: 4,
-price: 10,
-phoneNumber: 557489654,
-},
-{
-userId: 1,
-vehiculeId: 1,
-placeOfDeparture: "Tunis",
-placeOfDestination: "Nabeul",
-departureTime: "11:00",
-pathTaken: "Tunis-Nabeul",
-availableSeats: 4,
-price: 10,
-phoneNumber: 557489654,
-},
-]
+
 
 
 function TrajetsList() {
 
   const [data, setData] = useState([]);
   const [reload, setReload] = useState(false)
+  const [simpleS, setSimpleS] = useState(false)
+  const [detSearch, setDetSearch] = useState(false)
+
+  
 
   const changeDisplayedData = (newData) => {
     setData(newData);
@@ -425,6 +35,15 @@ function TrajetsList() {
     .then(res => { console.log(res); setData(res.data) })
     .catch(error => {console.log(error)})
   }
+  const showSimpleSearch = () => {
+    setSimpleS(true)
+    detSearch == true ? setDetSearch(false) : setDetSearch(false)
+  }
+
+  const showDetailledSearch = () => {
+    setDetSearch(true)
+    simpleS == true ? setSimpleS(false) : setSimpleS(false)
+  }
 
   useEffect(() => {
     fetchData();
@@ -435,35 +54,47 @@ function TrajetsList() {
     <Navbar />
     <div className="bg-gray-100 h-screen">
     <h1 className="font-bold text-center pt-8 mb-1  text-3xl text-gray-600">Liste des Trajets disponibles</h1>
-    <SimpleSearchForm onFetch={changeDisplayedData} reload={toggleReload}/>
+    <div className={simpleS || detSearch ? "flex justify-center mt-8" : 'flex justify-center mt-8 mb-5'}>
+    <button
+                onClick={() => showSimpleSearch()}
+                className="group relative mr-3 w-48 flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-[#ffc65e] hover:bg-[#e0ae51] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#ffc65e]"
+              >
+                <span className="ml-3">
+                <span className="absolute left-0 inset-y-0 flex items-center pl-3">
+                </span>
+                RECHERCHE SIMPLE
+                </span>
+              </button>
+              <button
+                onClick={() => showDetailledSearch()}
+                className="group relative w-48 ml-2 flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-[#ffc65e] hover:bg-[#e0ae51] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#ffc65e]"
+              >
+                <span className="ml-3">
+                <span className="absolute left-0 inset-y-0 flex items-center pl-3">
+                </span>
+                RECHERCHE DÉTAILLÉ
+                </span>
+              </button>
+    </div>
+    {
+      simpleS && !detSearch ?
+          <SimpleSearchForm onFetch={changeDisplayedData} reload={toggleReload}/>
+      : 
+      ''
+    }
+
+    {
+      detSearch && !simpleS ?
+        <DetailledSearchForm onFetch={changeDisplayedData} reload={toggleReload}/>
+        : ''
+    }
     {
       data.length > 0
       ? 
       <div className="grid lg:grid-cols-4 bg-gray-100 md:grid-cols-2 sm:grid-cols-2 xs:grid-cols-1 gap-2 mr-10 ml-10 mb-4">
       {
         data.map((trajet, index) => {
-          return (
-            <div 
-            className="mt-2 mb-2 lg:ml-2 lg:mr-2 p-3 pt-5 pb-5 bg-white rounded-md shadow-xl" 
-            key={index}>
-              <div className="flex flex-row">
-                <img src={trajet.user[0].picture} className="w-14 h-14" style={{borderRadius:"50%"}}/>
-                <div className="pt-2 ml-2">
-                <h4 className=""><NavLink to={`profile/${trajet.user[0]._id}`}>{trajet.user[0].firstName} {trajet.user[0].lastName}</NavLink></h4>
-                <h5 className="text-muted text-gray-400"><i>Publiée le <Moment format="DD/MM/YYYY">{trajet.createdAt}</Moment></i></h5>
-                </div>
-              </div>
-              <div className="mt-4 ml-4">
-                <p>Lieu de départ: {trajet.placeOfDeparture}</p>
-                <p>Lieu de destination: {trajet.placeOfDestination}</p>
-                <p>Heure de départ: {trajet.departureTime}</p>
-                <p>Trajectoire effectué: {trajet.pathTaken}</p>
-                <p>Places disponibles: {trajet.availableSeats}</p>
-                <p>Prix: {trajet.price} DT</p>
-                <p>Numéro de téléphone: {trajet.phoneNumber}</p>
-              </div>
-            </div>
-          )
+          return <TrajetAnnonce trajet={trajet} key={index} />
         })
       }
     </div>
