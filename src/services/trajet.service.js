@@ -30,6 +30,7 @@ class TrajetService {
     return api.post(`/trajets/detsearch`, data)
   }
 
+
   getUserProfile(id){
     return api.get(`/user/${id}`)
   }
@@ -46,8 +47,8 @@ class TrajetService {
     return api.put(`/vehicule/${id}`, data)
   }
 
-  getUserQuestions(id){
-    return api.get(`/forum/userquest/${id}`)
+  postReservation(data){
+    return api.post(`/reservation`, data)
   }
 }
 

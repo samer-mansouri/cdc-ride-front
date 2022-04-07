@@ -276,6 +276,10 @@ export default function UserProfile(props) {
                         <dt className="text-sm font-medium text-gray-500">Date de naissance</dt>
                         <dd className="mt-1 text-sm text-gray-900"><Moment format="DD/MM/YYYY">{user.dateOfBirth}</Moment></dd>
                       </div>
+                      <div className="sm:col-span-1">
+                        <dt className="text-sm font-medium text-gray-500">Genre</dt>
+                        <dd className="mt-1 text-sm text-gray-900">{user.gender == "Male" ? "Homme" : "Femme"}</dd>
+                      </div>
                      
                     
                     </dl>
