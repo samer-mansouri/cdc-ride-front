@@ -2,7 +2,7 @@ import api from './api';
 
 class TrajetService {
   getAllTrajets() {
-    return api.get('/trajets');
+    return api.get('/trajetsres');
   }
 
   getTrajet(id){
