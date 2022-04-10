@@ -29,6 +29,16 @@ export default function SingleTrajetModal({ openModal, changeShowModalState, tra
         })
     }
 
+    const removeReservation = () => {
+        TrajetService.cancelReservation(trajet._id)
+            .then(res => {
+                console.log(res)
+                setLocalTrajetStatus("")
+            }).catch(error => {
+                console.log(error)
+            })
+    }
+
   useEffect(()=> {
     if (openModal == true) {
       setOpen(true)
@@ -91,10 +101,8 @@ export default function SingleTrajetModal({ openModal, changeShowModalState, tra
                 
               </div>
               {
-                    localTrajetStatus
-                    ?
-                    ''
-                    : 
+                    localTrajetStatus != "pending" ?
+                    
                     <>
                     {
                       TokenService.getCurrentUserId() != trajet.user[0]._id ?
@@ -104,6 +112,17 @@ export default function SingleTrajetModal({ openModal, changeShowModalState, tra
                   </div> : ''
                   } 
                     </>
+                    : 
+                    localTrajetStatus == "pending"
+                    ? <>
+                    {
+                      TokenService.getCurrentUserId() != trajet.user[0]._id ?
+                      <div className="ml-auto">
+                  <button className="mt-7 mb-2 mr-5 bg-gray-200 rounded-md shadow-md p-2 text-gray-600" onClick={() => removeReservation()}>ANNULER</button>
+      
+                  </div> : ''
+                  } 
+                    </> : ''
                   }    
                 </div>
               <div className="mt-5 ml-4">

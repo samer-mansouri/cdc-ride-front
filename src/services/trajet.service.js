@@ -50,6 +50,10 @@ class TrajetService {
   postReservation(data){
     return api.post(`/reservation`, data)
   }
+
+  cancelReservation(id){
+    return api.put(`/reservationcancel/${id}`)
+  }
 }
 
 export default new TrajetService();

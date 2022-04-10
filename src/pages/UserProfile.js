@@ -36,6 +36,7 @@ import TrajetService from '../services/trajet.service'
 import Moment from 'react-moment';
 import TokenService from '../services/token.service'
 import AddCarModal from '../components/AddCarModal'
+import UpdateProfilePic from '../components/UpdateProfilePic'
 
 
 const navigation = [
@@ -170,6 +171,9 @@ export default function UserProfile(props) {
 
   const { id } = useParams();
   
+
+  const link = process.env.REACT_APP_BACKEND_URL;
+
   const getUser = () =>{
     TrajetService.getUserProfile(id)
     .then(res => {
@@ -216,7 +220,7 @@ export default function UserProfile(props) {
                 <div className="relative">
                   <img
                     className="h-16 w-16 rounded-full"
-                    src={user.picture}
+                    src={`${link}${user.picture}`}
                     alt=""
                   />
                   <span className="absolute inset-0 shadow-inner rounded-full" aria-hidden="true" />
@@ -231,10 +235,22 @@ export default function UserProfile(props) {
                   </Moment>
                 </p>
               </div>
+              
             </div>
+
           </div>
+         {
+           id === TokenService.getCurrentUserId()
+           ?
+           <div className="max-w-3xl flex justify-center ml-20 px-4 sm:px-6 md:px-8 mt-5">
+           <UpdateProfilePic />
+   
+           </div>
+           : ''
+         }
 
           <div className="mt-8 max-w-3xl mx-auto grid grid-cols-1 gap-6 sm:px-6 lg:max-w-7xl lg:grid-flow-col-dense lg:grid-cols-3">
+            
             <div className="space-y-6 lg:col-start-1 lg:col-span-2">
               {/* Description list*/}
               <section aria-labelledby="applicant-information-title">
