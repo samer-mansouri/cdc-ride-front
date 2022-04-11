@@ -37,7 +37,8 @@ import Moment from 'react-moment';
 import TokenService from '../services/token.service'
 import AddCarModal from '../components/AddCarModal'
 import UpdateProfilePic from '../components/UpdateProfilePic'
-
+import api from '../services/api';
+import FormUpdateUser from '../components/FormUpdateUser'
 
 const navigation = [
   { name: 'Dashboard', href: '#' },
@@ -141,6 +142,9 @@ export default function UserProfile(props) {
   const [user, setUser] = useState([])
   const [userGarage, setUserGarage] = useState([])
   const [load, setLoad] = useState(true)
+  const [profilePicture, setProfilePicture] = useState('')
+
+  const [showForm, setShowForm] = useState(false)
 
   const updateUserGarage = (car) => {
     setUserGarage(prevState => [...prevState, car])
@@ -150,6 +154,14 @@ export default function UserProfile(props) {
   const updateUserGarageOnDelete = (garage) => {
     setUserGarage(garage)
     console.log(userGarage)
+  }
+
+  const updateProfilePicture = (picture) => {
+    setProfilePicture(picture)
+  }
+
+  const updateUser = (user) => {
+    setUser(user)
   }
 
   const updateUserGarageOnUpdate = (car) => {
@@ -162,6 +174,18 @@ export default function UserProfile(props) {
     setUserGarage(newArr);
   }
 
+  const showImage = (image) => {
+    console.log(image)
+    api.get(`/${image}`)
+    .then(res => {
+      console.log(res);
+    })
+    .catch(err => {
+      //log error status code
+      console.log(err.data);
+    })
+  }
+
 
   const [openModal, setOpenModal] = useState(false)
 
@@ -172,7 +196,8 @@ export default function UserProfile(props) {
   const { id } = useParams();
   
 
-  const link = process.env.REACT_APP_BACKEND_URL;
+
+  
 
   const getUser = () =>{
     TrajetService.getUserProfile(id)
@@ -180,6 +205,7 @@ export default function UserProfile(props) {
       console.log(res.data)
       setUser(res.data)
       setUserGarage(res.data.garage)
+      setProfilePicture(res.data.picture)
     })
     .catch(error => {
       console.log(error)
@@ -219,9 +245,11 @@ export default function UserProfile(props) {
               <div className="flex-shrink-0">
                 <div className="relative">
                   <img
-                    className="h-16 w-16 rounded-full"
-                    src={`${link}${user.picture}`}
+                    className="h-48 w-48 rounded-full"
+                    crossOrigin
+                    src={profilePicture}
                     alt=""
+                    	                    
                   />
                   <span className="absolute inset-0 shadow-inner rounded-full" aria-hidden="true" />
                 </div>
@@ -243,7 +271,9 @@ export default function UserProfile(props) {
            id === TokenService.getCurrentUserId()
            ?
            <div className="max-w-3xl flex justify-center ml-20 px-4 sm:px-6 md:px-8 mt-5">
-           <UpdateProfilePic />
+           <UpdateProfilePic 
+                 updateProfilePicture={updateProfilePicture}
+           />
    
            </div>
            : ''
@@ -264,6 +294,7 @@ export default function UserProfile(props) {
                   ?
                   <button
                 type="submit"
+                onClick={showForm ? () => setShowForm(false) : () => setShowForm(true)}
                 className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-[#ffc65e] hover:bg-[#e0ae51] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#ffc65e]"
               >
                 <span className="absolute left-0 inset-y-0 flex items-center pl-3">
@@ -274,7 +305,12 @@ export default function UserProfile(props) {
                   ''
                 }
                   </div>
-                  <div className="border-t border-gray-200 px-4 py-5 sm:px-6">
+                  {
+                    showForm
+                    ?
+                    <FormUpdateUser user={user} updateUser={updateUser}/>
+                    :
+                    <div className="border-t border-gray-200 px-4 py-5 sm:px-6">
                     <dl className="grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2">
                       <div className="sm:col-span-1">
                         <dt className="text-sm font-medium text-gray-500">Adresse Email</dt>
@@ -283,6 +319,10 @@ export default function UserProfile(props) {
                       <div className="sm:col-span-1">
                         <dt className="text-sm font-medium text-gray-500">Numéro de téléphone</dt>
                         <dd className="mt-1 text-sm text-gray-900">{user.phoneNumber}</dd>
+                      </div>
+                      <div className="sm:col-span-1">
+                        <dt className="text-sm font-medium text-gray-500">Numéro de téléphone</dt>
+                        <dd className="mt-1 text-sm text-gray-900">{user.address}</dd>
                       </div>
                       <div className="sm:col-span-1">
                         <dt className="text-sm font-medium text-gray-500">Permis</dt>
@@ -300,6 +340,7 @@ export default function UserProfile(props) {
                     
                     </dl>
                   </div>
+                  }
                 </div>
               </section>
               

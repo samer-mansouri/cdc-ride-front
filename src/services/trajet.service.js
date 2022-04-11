@@ -35,6 +35,10 @@ class TrajetService {
     return api.get(`/user/${id}`)
   }
 
+  updateUserProfile(data){
+    return api.put(`/updateuser`, data)
+  }
+
   addCar(data){
     return api.post(`/vehicule`, data)
   }
