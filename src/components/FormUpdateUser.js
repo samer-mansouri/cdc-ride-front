@@ -4,6 +4,7 @@ import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import TrajetService from '../services/trajet.service';
 import { useState } from 'react';
+import SuccessAlert from './SuccessAlert';
 
 const SignUpSchema = Yup.object().shape({
     email: Yup.string().email('Invalid email').required('Email field is required'),
@@ -12,7 +13,14 @@ export default function FormUpdateUser({ user, updateUser }) {
 
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
-    const [success, setSuccess] = useState(null);
+    const [success, setSuccess] = useState(false);
+    
+    const setSuccessToFalse = () => {
+      setTimeout(() => {
+        setSuccess(false);
+      }, 5000);
+    };
+
 
     const handleSubmit = (values) => {
         setIsLoading(true);
@@ -21,6 +29,8 @@ export default function FormUpdateUser({ user, updateUser }) {
                 setIsLoading(false);
                 console.log(response.data);
                 updateUser(response.data);
+                setSuccess(true);
+                setSuccessToFalse();
             })
             .catch(error => {
                 setIsLoading(false);
@@ -33,6 +43,15 @@ export default function FormUpdateUser({ user, updateUser }) {
     <>
       <div className="min-h-full flex items-center justify-center pb-8 px-1 sm:px-1 lg:px-8">
         <div className="max-w-md w-full ">
+
+        {
+          success ?
+          <SuccessAlert 
+            title="Votre profil a été mis à jour avec succès"
+            message="Vous pouvez maintenant vous connecter avec vos nouveaux identifiants"
+          />
+          : ''
+        }
           
         <Formik
         initialValues={{

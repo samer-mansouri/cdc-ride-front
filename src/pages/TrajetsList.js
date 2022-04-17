@@ -9,6 +9,7 @@ import SimpleSearchForm from '../components/SimpleSearchForm'
 import TrajetService from '../services/trajet.service';
 import DetailledSearchForm from '../components/DetailledSearchForm';
 import TrajetAnnonce from '../components/TrajetAnnonce';
+import AddTrajet from '../components/AddTrajet';
 
 
 
@@ -19,7 +20,8 @@ function TrajetsList() {
   const [reload, setReload] = useState(false)
   const [simpleS, setSimpleS] = useState(false)
   const [detSearch, setDetSearch] = useState(false)
-
+  const [addTrajet, setAddTrajet] = useState(false)
+  const [ cars, setCars ] = useState([])
   
 
   const changeDisplayedData = (newData) => {
@@ -29,24 +31,44 @@ function TrajetsList() {
   const toggleReload = () => {
     reload ? setReload(false) : setReload(true);
   }
+
+  const updateTrajetsList = (trajet) => {
+    setData(prevState => [trajet, ...prevState]);
+  }
   
   const fetchData = () => {
     TrajetService.getAllTrajets()
     .then(res => { console.log(res); setData(res.data) })
     .catch(error => {console.log(error)})
   }
+
+  const fetchUserConnectedCars = () => {
+    TrajetService.getUserCars()
+    .then(res => { console.log(res); setCars(res.data) })
+    .catch(error => {console.log(error)})
+  }
+
   const showSimpleSearch = () => {
     setSimpleS(true)
     detSearch == true ? setDetSearch(false) : setDetSearch(false)
+    addTrajet == true ? setAddTrajet(false) : setAddTrajet(false)
   }
 
   const showDetailledSearch = () => {
     setDetSearch(true)
     simpleS == true ? setSimpleS(false) : setSimpleS(false)
+    addTrajet == true ? setAddTrajet(false) : setAddTrajet(false)
+  }
+
+  const showAddTrajet = () => {
+    setAddTrajet(true)
+    detSearch == true ? setDetSearch(false) : setDetSearch(false)
+    simpleS == true ? setSimpleS(false) : setSimpleS(false)
   }
 
   useEffect(() => {
     fetchData();
+    fetchUserConnectedCars();
   }, [reload]);
 
   return (
@@ -75,18 +97,36 @@ function TrajetsList() {
                 RECHERCHE DÉTAILLÉ
                 </span>
               </button>
+              <button
+                onClick={() => showAddTrajet()}
+                className="group relative w-48 ml-2 flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-[#ffc65e] hover:bg-[#e0ae51] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#ffc65e]"
+              >
+                <span className="ml-3">
+                <span className="absolute left-0 inset-y-0 flex items-center pl-3">
+                </span>
+                AJOUTER TRAJET
+                </span>
+              </button>
     </div>
     {
-      simpleS && !detSearch ?
+      simpleS && !detSearch &&  !addTrajet ?
           <SimpleSearchForm onFetch={changeDisplayedData} reload={toggleReload}/>
       : 
       ''
     }
 
     {
-      detSearch && !simpleS ?
+      detSearch && !simpleS && !addTrajet ?
         <DetailledSearchForm onFetch={changeDisplayedData} reload={toggleReload}/>
         : ''
+    }
+    {
+      addTrajet && !simpleS && !detSearch  ?
+      <AddTrajet 
+      vehicules={cars}
+      updateTrajetsList={updateTrajetsList}
+    />  : ''
+
     }
     {
       data.length > 0

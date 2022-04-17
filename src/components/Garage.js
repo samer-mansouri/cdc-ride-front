@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import TrajetService from '../services/trajet.service';
 import AddCarModal from './AddCarModal';
 import TokenService from '../services/token.service';
+import PictureModal from './PictureModal';
+import UpdateCarPic from './UpdateCarPic';
 
 function Garage(props) {
     console.log(props)
@@ -9,8 +11,26 @@ function Garage(props) {
 
     const [openModal, setOpenModal] = useState(false)
 
+    const [showUpdatePicForm, setShowUpdatePicForm] = useState(false)
+
+    const [carToUpdate, setCarToUpdate] = useState(null)
+
+    const toggleShowUpdatePicForm = () => {
+        setShowUpdatePicForm(!showUpdatePicForm)
+    }
+
+    
+
+
     const toggleOpenModal = () => {
         openModal ? setOpenModal(false) : setOpenModal(true)
+    }
+
+    const [ showPic, setshowPic ] = useState(false)
+    const [ currentCarId, setCurrentCarId ] = useState(null)
+
+    const toggleshowPic = () => {
+        showPic ? setshowPic(false) : setshowPic(true)
     }
 
     const [ currentVehicule, setCurrentVehicule ] = useState(null)
@@ -71,6 +91,51 @@ function Garage(props) {
                             <h1><span className="text-gray-600">Catégorie:</span> {vehicule.category}</h1>
                             <h1><span className="text-gray-600">Motorisation:</span> {vehicule.motorization}</h1>
                             <h1><span className="text-gray-600">Puissance:</span> {vehicule.power}</h1>
+                            <div class="flex justify-end">
+                            {
+                            userId === TokenService.getCurrentUserId() ?
+                            <button
+                                onClick={() =>{
+                                    setCarToUpdate(vehicule._id)
+                                    toggleShowUpdatePicForm()
+                                }}
+                                className="group relative w-30 ml-2 flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-[#ffc65e] hover:bg-[#e0ae51] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#ffc65e]"
+                            >
+                            {
+                                vehicule.vehiculePic?
+                                'MÀJ Photo'
+                                : 'Ajouter Photo'
+
+                            }    
+                            </button> 
+                            : '' }
+                            <button
+                            onClick={() =>{
+                                setCurrentCarId(vehicule._id)
+                                setshowPic(true)
+                            }}
+                                className="group relative w-24 ml-2 flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-[#ffc65e] hover:bg-[#e0ae51] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#ffc65e]"
+                            >Photo</button>
+                            </div>
+
+
+                            {
+                                showUpdatePicForm && carToUpdate === vehicule._id ?
+                                <UpdateCarPic 
+                                    vehiculeId={vehicule._id}
+                                />
+                                : ''
+                            }
+                            
+                            
+                            {
+                                showPic && currentCarId == vehicule._id ? 
+                                <PictureModal 
+                                image={vehicule.vehiculePic}
+                                openModal={showPic}
+                                toggleShowPic={toggleshowPic}    
+                            /> : ''
+                            }
                            
                         </div>
                     )

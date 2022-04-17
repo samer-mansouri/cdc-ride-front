@@ -39,6 +39,10 @@ class TrajetService {
     return api.put(`/updateuser`, data)
   }
 
+  getUserCars(){
+    return api.get(`/vehicules`);
+  }
+
   addCar(data){
     return api.post(`/vehicule`, data)
   }
@@ -51,12 +55,20 @@ class TrajetService {
     return api.put(`/vehicule/${id}`, data)
   }
 
+  updateCarPic(id, data){
+    return api.post(`/vehiculepic/${id}`, data)
+  }
+
   postReservation(data){
     return api.post(`/reservation`, data)
   }
 
   cancelReservation(id){
     return api.put(`/reservationcancel/${id}`)
+  }
+
+  getCurrentUserTrajets(){
+    return api.get(`/mytrajets`)
   }
 }
 

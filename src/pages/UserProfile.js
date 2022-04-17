@@ -27,6 +27,7 @@ import {
   UserIcon,
   PlusIcon,
   UsersIcon,
+  MapIcon,
 } from '@heroicons/react/solid'
 import { BellIcon, MenuIcon, XIcon } from '@heroicons/react/outline'
 import Navbar from '../components/Navbar'
@@ -39,6 +40,9 @@ import AddCarModal from '../components/AddCarModal'
 import UpdateProfilePic from '../components/UpdateProfilePic'
 import api from '../services/api';
 import FormUpdateUser from '../components/FormUpdateUser'
+import CurrentUserTrajets from '../components/CurrentUserTrajets'
+import UpdatePermisPic from '../components/UpdatePermisPic'
+import PictureModal from '../components/PictureModal'
 
 const navigation = [
   { name: 'Dashboard', href: '#' },
@@ -146,6 +150,12 @@ export default function UserProfile(props) {
 
   const [showForm, setShowForm] = useState(false)
 
+  const [ updatePermisPic, setShowUpdatePermisPic ] = useState(false)
+
+  const toggleUpdatePermisPic = () => {
+    setShowUpdatePermisPic(!updatePermisPic)
+  }
+
   const updateUserGarage = (car) => {
     setUserGarage(prevState => [...prevState, car])
     console.log(userGarage)
@@ -196,6 +206,12 @@ export default function UserProfile(props) {
   const { id } = useParams();
   
 
+  const [ permisPicModal, setPermisPicModal ] = useState(false)
+  
+  const togglePermisPicModal = () => {
+    permisPicModal ? setPermisPicModal(false) : setPermisPicModal(true)
+  }
+
 
   
 
@@ -236,7 +252,16 @@ export default function UserProfile(props) {
       car={null}
       updateUserGarageOnUpdate={updateUserGarageOnUpdate}
       />
-      <div className="min-h-full bg-gray-100 h-screen">
+      
+      {
+        permisPicModal ?
+        <PictureModal
+        image={user.permisPic}
+        openModal={permisPicModal}
+        toggleShowPic={togglePermisPicModal}
+      /> : ''
+      }
+      <div className="h-full bg-gray-100 h-screen">
         <Navbar />
         <main className="py-10">
           {/* Page header */}
@@ -321,12 +346,16 @@ export default function UserProfile(props) {
                         <dd className="mt-1 text-sm text-gray-900">{user.phoneNumber}</dd>
                       </div>
                       <div className="sm:col-span-1">
-                        <dt className="text-sm font-medium text-gray-500">Numéro de téléphone</dt>
+                        <dt className="text-sm font-medium text-gray-500">Adresse</dt>
                         <dd className="mt-1 text-sm text-gray-900">{user.address}</dd>
                       </div>
                       <div className="sm:col-span-1">
                         <dt className="text-sm font-medium text-gray-500">Permis</dt>
-                        <dd className="mt-1 text-sm text-gray-900">{user.permis}</dd>
+                        <dd className="mt-1 text-sm text-gray-900">{user.permis}
+                          <p className='text-gray-500 underline hover:cursor-pointer'
+                            onClick={() => togglePermisPicModal()}
+                          >Afficher Image</p>
+                        </dd>
                       </div>
                       <div className="sm:col-span-1">
                         <dt className="text-sm font-medium text-gray-500">Date de naissance</dt>
@@ -336,12 +365,45 @@ export default function UserProfile(props) {
                         <dt className="text-sm font-medium text-gray-500">Genre</dt>
                         <dd className="mt-1 text-sm text-gray-900">{user.gender == "Male" ? "Homme" : "Femme"}</dd>
                       </div>
+                      {
+                        id === TokenService.getCurrentUserId()
+                        ?
+                        <div className="flex justify-end">
+                          <button
+                            type="submit"
+                            onClick={() => toggleUpdatePermisPic()}
+                            className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-[#ffc65e] hover:bg-[#e0ae51] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#ffc65e]"
+                          >
+                            <span className="absolute left-0 inset-y-0 flex items-center pl-3">
+                            </span>Mettre à jour la photo du permis
+                          </button>  
+                        </div>
+                        : ''
+                      }
+
+                      
                      
                     
                     </dl>
+                    {
+                        updatePermisPic ?
+                        <div className="mt-2 w-80">
+                          <UpdatePermisPic />
+                        </div>
+                        : ''
+                      }
                   </div>
                   }
                 </div>
+                {
+                 id === TokenService.getCurrentUserId()
+                  ?
+                <div className="bg-white px-4 py-5 shadow-md sm:rounded-lg sm:px-6 mt-4">
+                  <CurrentUserTrajets />
+                </div>
+
+                  : ''
+                }
               </section>
               
               {/* Comments*/}
@@ -349,6 +411,21 @@ export default function UserProfile(props) {
             </div>
 
             <section aria-labelledby="timeline-title" className="lg:col-start-3 lg:col-span-1">
+            <div className="bg-white px-4 py-5 shadow-md sm:rounded-lg sm:px-6 mb-4">
+                <div className="flex">
+                <button
+                type="submit"
+                onClick={showForm ? () => setShowForm(false) : () => setShowForm(true)}
+                className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-[#ffc65e] hover:bg-[#e0ae51] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#ffc65e]"
+              >
+                <span className="absolute left-0 inset-y-0 flex items-center pl-3">
+                  <MapIcon className="h-5 w-5 text-[#fdf2c5] group-hover:text-[#ffc65e]" aria-hidden="true" />{''}
+                </span>AFFICHER LA LISTE DE MES TRAJETS
+              </button>
+                </div>
+              </div>
+
+
               <div className="bg-white px-4 py-5 shadow-md sm:rounded-lg sm:px-6">
                 <div className="flex">
                 <h2 id="timeline-title" className="mr-24 text-lg font-medium text-gray-900">
@@ -381,6 +458,8 @@ export default function UserProfile(props) {
                 /> : '' } 
                 </div>
               </div>
+
+              
             </section>
           </div>
         </main>
