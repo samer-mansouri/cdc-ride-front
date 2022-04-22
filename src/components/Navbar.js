@@ -114,7 +114,10 @@ export default function Navbar() {
            TokenService.getLocalAccessToken() && TokenService.getLocalRefreshToken() && TokenService.getUser()
            ? 
            <>
-           <NavLink to={'/profile/' + TokenService.getCurrentUserId()} className="text-base font-medium text-gray-500 hover:text-gray-900">
+           <NavLink to={'/usertrajets'} className="text-base font-medium text-gray-500 hover:text-gray-900">
+             Vos Trajets
+            </NavLink>
+            <NavLink to={'/profile/' + TokenService.getCurrentUserId()} className="text-base font-medium text-gray-500 hover:text-gray-900">
             <UserIcon className="h-6 w-6 inline mb-1" aria-hidden="true" /> Profile
             </NavLink>
             <NavLink to="/logout" className="text-base font-medium text-gray-500 hover:text-gray-900">

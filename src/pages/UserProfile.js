@@ -40,7 +40,6 @@ import AddCarModal from '../components/AddCarModal'
 import UpdateProfilePic from '../components/UpdateProfilePic'
 import api from '../services/api';
 import FormUpdateUser from '../components/FormUpdateUser'
-import CurrentUserTrajets from '../components/CurrentUserTrajets'
 import UpdatePermisPic from '../components/UpdatePermisPic'
 import PictureModal from '../components/PictureModal'
 
@@ -395,15 +394,7 @@ export default function UserProfile(props) {
                   </div>
                   }
                 </div>
-                {
-                 id === TokenService.getCurrentUserId()
-                  ?
-                <div className="bg-white px-4 py-5 shadow-md sm:rounded-lg sm:px-6 mt-4">
-                  <CurrentUserTrajets />
-                </div>
-
-                  : ''
-                }
+                
               </section>
               
               {/* Comments*/}
@@ -411,19 +402,7 @@ export default function UserProfile(props) {
             </div>
 
             <section aria-labelledby="timeline-title" className="lg:col-start-3 lg:col-span-1">
-            <div className="bg-white px-4 py-5 shadow-md sm:rounded-lg sm:px-6 mb-4">
-                <div className="flex">
-                <button
-                type="submit"
-                onClick={showForm ? () => setShowForm(false) : () => setShowForm(true)}
-                className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-[#ffc65e] hover:bg-[#e0ae51] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#ffc65e]"
-              >
-                <span className="absolute left-0 inset-y-0 flex items-center pl-3">
-                  <MapIcon className="h-5 w-5 text-[#fdf2c5] group-hover:text-[#ffc65e]" aria-hidden="true" />{''}
-                </span>AFFICHER LA LISTE DE MES TRAJETS
-              </button>
-                </div>
-              </div>
+            
 
 
               <div className="bg-white px-4 py-5 shadow-md sm:rounded-lg sm:px-6">

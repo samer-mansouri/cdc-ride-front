@@ -2,6 +2,7 @@ import { LockClosedIcon } from '@heroicons/react/solid'
 import Navbar from '../components/Navbar'
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
+ 
 
 const SignUpSchema = Yup.object().shape({
     email: Yup.string().email('Invalid email').required('Email field is required'),

@@ -1,6 +1,8 @@
 /* This example requires Tailwind CSS v2.0+ */
 import { useEffect, useState } from "react";
+import Navbar from "../components/Navbar";
 import TrajetService from "../services/trajet.service"
+import ReservationsList from "./ReservationsList";
 
 const people = [
     { name: 'Jane Cooper', title: 'Regional Paradigm Technician', role: 'Admin', email: 'jane.cooper@example.com' },
@@ -28,9 +30,12 @@ const people = [
         fetchData();
     }, [])
     return (
-      <div className="flex flex-col">
+      <>
+      <Navbar />
+      <div className="h-full bg-gray-100 h-screen">
+      <div className="flex flex-col pt-8 h-screen mx-8">
         <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-            <h3 className="ml-8 text-gray-500 font-bold">Liste de mes trajets</h3>
+            <h3 className="ml-8 text-gray-600 font-bold mb-4">Liste de mes trajets</h3>
           <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
             <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
               <table className="min-w-full divide-y divide-gray-200">
@@ -78,6 +83,12 @@ const people = [
                     >
                       Numéro de téléphone
                     </th>
+                    <th
+                      scope="col"
+                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    >
+                      Nombre de réservations  
+                    </th>
                     <th scope="col" className="relative px-6 py-3">
                       <span className="sr-only">Edit</span>
                     </th>
@@ -93,10 +104,16 @@ const people = [
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{trajet.availableSeats}</td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{trajet.price}DT</td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{trajet.phoneNumber}</td>
-
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{trajet.reservationsNumber}</td>
                       <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                        {
+                            trajet.reservationsNumber > 0 ?
+                            <><a href="#" className="text-indigo-600 hover:text-indigo-900">
+                          Afficher La lise des réservations
+                        </a><>{' | '}</></> : ''
+                        }
                         <a href="#" className="text-indigo-600 hover:text-indigo-900">
-                          Edit
+                          Éditer
                         </a>
                       </td>
                     </tr>
@@ -107,5 +124,7 @@ const people = [
           </div>
         </div>
       </div>
+        </div>
+      </>
     )
   }
