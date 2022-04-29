@@ -14,7 +14,7 @@ class TrajetService {
   }
 
   deleteTrajet(id){
-      return api.post(`/trajet/${id}`);
+      return api.delete(`/trajet/${id}`);
   }
 
   updateTrajet(id, data){
@@ -67,8 +67,20 @@ class TrajetService {
     return api.put(`/reservationcancel/${id}`)
   }
 
+  confirmReservationOwner(id){
+    return api.put(`/reservationconfirmowner/${id}`)
+  }
+
+  cancelReservationOwner(id){
+    return api.put(`/reservationcancelowner/${id}`)
+  }
+
   getCurrentUserTrajets(){
     return api.get(`/mytrajets`)
+  }
+
+  getTrajetUserReservationsList(id){
+    return api.get(`/trajteres/${id}`)
   }
 }
 

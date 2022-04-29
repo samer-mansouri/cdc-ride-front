@@ -1,18 +1,33 @@
 /* This example requires Tailwind CSS v2.0+ */
 import { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
+import ReservationsListModal from "../components/ReservationListModal";
+import UpdateTrajetModal from "../components/UpdateTrajetModal";
 import TrajetService from "../services/trajet.service"
 import ReservationsList from "./ReservationsList";
 
-const people = [
-    { name: 'Jane Cooper', title: 'Regional Paradigm Technician', role: 'Admin', email: 'jane.cooper@example.com' },
-    // More people...
-  ]
+
   
   export default function CurrentUserTrajets() {
 
     const [data, setData] = useState([]);
+
+    const [currentTrajet, setCurrentTrajet] = useState('');
+    const [showModal, setShowModal] = useState(false);
+
+    const [showModalUpdate, setShowModalUpdate] = useState(false);
+
+    const toggleShowModal = () => {
+        setShowModal(!showModal);
+    }
+
+    const toggleShowModalUpdate = () => {
+        setShowModalUpdate(!showModalUpdate);
+    }
     
+    const toggleCurrentTrajet = (trajet = null) => {
+        setCurrentTrajet(trajet);
+    }
 
     const fetchData = () => {
         TrajetService.getCurrentUserTrajets()
@@ -24,6 +39,29 @@ const people = [
             console.log(err);
         })
     }
+
+    const updateUserTrajets = (trajet) => {
+        setData(prevState => [trajet, ...prevState]);
+    }
+
+    const updateUserTrajetsOnUpdate = (trajet) => {
+      const index = data.findIndex(t => t._id === trajet._id);
+      const newArr = [...data];
+      newArr[index] = trajet;
+      console.log(index);
+      console.log(newArr);
+      setData(newArr);
+    }
+
+    const deleteTrajetSelected = (trajet) => {
+        TrajetService.deleteTrajet(trajet)
+        .then(res => {
+            console.log(res);
+            setData(data.filter(item => item.id !== trajet))
+        }).catch(err => {
+            console.log(err);
+    })
+  }
     
 
     useEffect(() => {
@@ -95,8 +133,26 @@ const people = [
                   </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
-                  {data.map((trajet) => (
-                    <tr key={trajet._id}>
+                  {data.map((trajet, index) => (
+                    <tr key={trajet.index}>
+                      {
+                        showModal && currentTrajet == trajet._id? 
+                        <ReservationsListModal 
+                        openModal={showModal}
+                        changeShowModalState={toggleShowModal}
+                        trajetId={trajet._id}
+                      /> : ''
+                      }
+
+                      {
+                        showModalUpdate && currentTrajet == trajet._id?
+                        <UpdateTrajetModal 
+                          openModal={showModalUpdate}
+                          toggleOpenModal={toggleShowModalUpdate}
+                          updateUserGarageOnUpdate={updateUserTrajetsOnUpdate}
+                          trajet={trajet}
+                        /> : ''
+                      }
                       <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{trajet.placeOfDeparture}</td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{trajet.placeOfDestination}</td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{trajet.pathTaken}</td>
@@ -108,12 +164,27 @@ const people = [
                       <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                         {
                             trajet.reservationsNumber > 0 ?
-                            <><a href="#" className="text-indigo-600 hover:text-indigo-900">
+                            <><a 
+                              onClick={() => 
+                                {
+                                  toggleCurrentTrajet(trajet._id);
+                                  toggleShowModal()
+                                }}
+                            href="#" className="text-indigo-600 hover:text-indigo-900">
                           Afficher La lise des réservations
                         </a><>{' | '}</></> : ''
                         }
-                        <a href="#" className="text-indigo-600 hover:text-indigo-900">
+                        <a href="#" className="text-indigo-600 hover:text-indigo-900"
+                          onClick={() => {
+                            toggleCurrentTrajet(trajet._id);
+                            toggleShowModalUpdate()
+                          }}
+                        >
                           Éditer
+                        </a>{' | '}
+                        <a href="#" className="text-indigo-600 hover:text-indigo-900"
+                        onClick={() => deleteTrajetSelected(trajet._id)}>
+                          Supprimer
                         </a>
                       </td>
                     </tr>
