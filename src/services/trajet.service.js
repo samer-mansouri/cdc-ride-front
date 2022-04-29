@@ -82,6 +82,15 @@ class TrajetService {
   getTrajetUserReservationsList(id){
     return api.get(`/trajteres/${id}`)
   }
+
+  getAllCovoiturages(){
+    return api.get(`/covoiturages`)
+  }
+
+  createCovoiturage(data){
+    return api.post(`/covoiturage`, data)
+  }
+
 }
 
 export default new TrajetService();

@@ -13,6 +13,7 @@ import UserProfile from './pages/UserProfile';
 import Logout from './components/Logout';
 import CurrentUserTrajets from './pages/CurrentUserTrajets';
 import ReservationsList from './pages/ReservationsList';
+import CovoituragesList from './pages/CovoituragesList';
 
 function App() {
   return (
@@ -28,6 +29,9 @@ function App() {
         </Route>
         <Route path="/reservations/:id">
           <ReservationsList />  
+        </Route>
+        <Route path="/covoiturages">
+          <CovoituragesList />  
         </Route>
         <Route path="/logout"><Logout /></Route>
       </Switch>
