@@ -56,7 +56,7 @@ function CovoituragesList() {
     <>
     <Navbar />
     <div className="bg-gray-100 h-screen">
-    <h1 className="font-bold text-center pt-8 mb-1  text-3xl text-gray-600">Liste des Trajets disponibles</h1>
+    <h1 className="font-bold text-center pt-8 mb-1  text-3xl text-gray-600">Liste des covoiturages publiés</h1>
     <div className={ addCovoiturage ? "flex justify-center mt-8" : 'flex justify-center mt-8 mb-5'}>
 
               <button

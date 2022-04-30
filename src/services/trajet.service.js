@@ -91,6 +91,14 @@ class TrajetService {
     return api.post(`/covoiturage`, data)
   }
 
+  noteUser(data, id){
+    return api.post(`/note/${id}`, data)
+  }
+
+  getUserNote(id){
+    return api.get(`/note/${id}`)
+  }
+
 }
 
 export default new TrajetService();
