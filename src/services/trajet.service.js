@@ -99,6 +99,10 @@ class TrajetService {
     return api.get(`/note/${id}`)
   }
 
+  createDeclaration(data){
+    return api.post(`/declaration`, data)
+  }
+
 }
 
 export default new TrajetService();

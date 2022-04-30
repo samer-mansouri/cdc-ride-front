@@ -1,5 +1,5 @@
 /* This example requires Tailwind CSS v2.0+ */
-import { Fragment } from 'react'
+import { Fragment, useState } from 'react'
 import { Popover, Transition } from '@headlessui/react'
 import {
   BookmarkAltIcon,
@@ -22,6 +22,7 @@ import {
 import { ChevronDownIcon } from '@heroicons/react/solid'
 import { NavLink } from 'react-router-dom'
 import TokenService from '../services/token.service'
+import AddDeclarationModal from './AddDeclarationModal'
 
 const solutions = [
   {
@@ -86,9 +87,19 @@ function classNames(...classes) {
 }
 
 export default function Navbar() {
+
+  const [showModal, setShowModal] = useState(false)
+  const toggleShowModal = () => setShowModal(!showModal)
+  
+
   return (
     <Popover className="sticky top-0 z-50 w-full bg-white">
+      
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
+      <AddDeclarationModal
+        openModal={showModal}
+        toggleOpenModal={toggleShowModal}
+      />
         <div className="flex justify-between items-center border-b-2 border-gray-100 py-6 md:justify-start md:space-x-10">
           <div className="flex justify-start lg:w-0 lg:flex-1">
             <NavLink to="/">
@@ -121,12 +132,17 @@ export default function Navbar() {
            <NavLink to={'/usertrajets'} className="text-base font-medium text-gray-500 hover:text-gray-900">
              Vos Trajets
             </NavLink>
+            <a 
+              onClick={() => setShowModal(true)}
+            className="text-base font-medium text-gray-500 hover:text-black hover:cursor-pointer" >Déclarer</a>
             <NavLink to={'/profile/' + TokenService.getCurrentUserId()} className="text-base font-medium text-gray-500 hover:text-gray-900">
             <UserIcon className="h-6 w-6 inline mb-1" aria-hidden="true" /> Profile
             </NavLink>
             <NavLink to="/logout" className="text-base font-medium text-gray-500 hover:text-gray-900">
             <LogoutIcon className="h-6 w-6 inline mb-1" aria-hidden="true" /> Se déconnecter
-            </NavLink></>
+            </NavLink>
+            </>
+  
            : 
           ''
          }

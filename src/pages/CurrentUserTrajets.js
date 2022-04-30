@@ -133,7 +133,13 @@ import ReservationsList from "./ReservationsList";
                   </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
-                  {data.map((trajet, index) => (
+                  {
+                  data.length <= 0 ?
+                    <h2 className="text-gray-500 text-xl text-center mt-3 mb-3">Vous n'avez aucun trajet en cours.</h2>
+
+                  :
+                  
+                  data.map((trajet, index) => (
                     <tr key={trajet.index}>
                       {
                         showModal && currentTrajet == trajet._id? 

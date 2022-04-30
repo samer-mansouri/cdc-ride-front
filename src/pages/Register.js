@@ -2,13 +2,46 @@ import { LockClosedIcon } from '@heroicons/react/solid'
 import Navbar from '../components/Navbar'
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
- 
+import AuthService from '../services/auth.service'; 
+import SuccessAlert from '../components/SuccessAlert';
+import { useRef, useState } from 'react';
+import ExclamationAlertNew from '../components/ExclamationAlertNew';
+
 
 const SignUpSchema = Yup.object().shape({
     email: Yup.string().email('Invalid email').required('Email field is required'),
     password: Yup.string().required('Password field is required'),
   });
 export default function Register() {
+
+  const [success, setSuccess] = useState(false);
+  const [mailErr, setMailErr] = useState(false);
+
+  const myForm = useRef(null)
+
+  const createAccount = (values) => {
+    AuthService.register(values)
+    .then(res => {
+      console.log(values)
+      console.log(res)
+      setSuccess(true)
+      myForm.current.resetForm();
+      setTimeout(() => {
+        setSuccess(false)
+      }, 5000);
+    })
+    .catch(err => {
+      console.log(err.response.status)
+      if(err.response.status === 409) {
+        setMailErr(true)
+        setTimeout(() => {
+          setMailErr(false)
+        }, 5000);
+      }
+    })
+  }
+
+
   return (
     <>
     <Navbar />
@@ -17,7 +50,27 @@ export default function Register() {
           <div>
             <h1 className="text-[#ffc65e] font-bold text-2xl text-center">RIDE</h1>
             <h2 className="mt-2 text-center text-3xl font-extrabold text-gray-900">Créer un nouveau compte</h2>
-         
+            {
+              success ? 
+              <div className="mt-2">
+               <SuccessAlert 
+                title={'Votre compte a été créé avec succès'}
+                message={'Bienvenue parmis nous, vous pouvez maintenant vous connecter'}
+              />  
+              </div>
+              : ''
+            }
+            {
+              mailErr ?
+              <div className="mt-2">
+              <ExclamationAlertNew
+                title={'Cette adresse mail est déjà utilisée'} 
+                message={'Veuillez en choisir une autre'}
+              />   
+              </div>
+              
+              : ''
+            }
           </div>
         <Formik
         initialValues={{
@@ -33,9 +86,10 @@ export default function Register() {
             password2: '',
             }}
             validationSchema={SignUpSchema}
-            onSubmit={values => console.log(values)}
+            onSubmit={values => createAccount(values)}
+            innerRef={f => (myForm.current = f)}
         >
-          <Form className="mt-8 space-y-6" action="#" method="POST">
+          <Form className="mt-7 space-y-6" action="#" method="POST">
             <input type="hidden" name="remember" defaultValue="true" />
             <div className="rounded-md shadow-sm -space-y-px">
             <div>
