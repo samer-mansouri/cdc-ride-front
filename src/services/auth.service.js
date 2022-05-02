@@ -27,6 +27,10 @@ class AuthService {
   getCurrentUser() {
     return TokenService.getUser();
   }
+
+  deleteMyAccount() {
+    return api.delete("/deleteuser");
+  }
 }
 
 export default new AuthService();

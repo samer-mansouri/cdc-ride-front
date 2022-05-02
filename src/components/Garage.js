@@ -64,7 +64,7 @@ function Garage(props) {
                             <div className="flex justify-end mb-3">
                            <button
                             onClick={() => deleteCar(vehicule._id)}
-                            className="group relative w-28  justify-end py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-red-500 hover:bg-red-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+                            className="group relative w-28  justify-end py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-red-400 hover:bg-red-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
                       >
                         <span className="absolute left-0 inset-y-0 flex items-center pl-3">
                         </span>SUPPRIMER 
@@ -76,7 +76,7 @@ function Garage(props) {
                             setOpenModal(true)
                         }}
 
-                        className="group relative w-28 ml-2 justify-end py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-500 hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                        className="group relative w-28 ml-2 justify-end py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-400 hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
                       >
                         <span className="absolute left-0 inset-y-0 flex items-center pl-3">
                         </span>MODIFIER 

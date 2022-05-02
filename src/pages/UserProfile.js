@@ -33,6 +33,7 @@ import FormUpdateUser from '../components/FormUpdateUser'
 import UpdatePermisPic from '../components/UpdatePermisPic'
 import PictureModal from '../components/PictureModal'
 import RatingComp from '../components/RatingComp'
+import DeleteAccountComp from '../components/DeleteAccountComp'
 
 
 
@@ -162,7 +163,7 @@ export default function UserProfile(props) {
         toggleShowPic={togglePermisPicModal}
       /> : ''
       }
-      <div className="h-full bg-gray-100 h-screen">
+      <div className="h-full bg-gray-100 h-screen bg-profile">
         <Navbar />
         <main className="py-10">
           {/* Page header */}
@@ -193,7 +194,12 @@ export default function UserProfile(props) {
             </div>
             {
               id === TokenService.getCurrentUserId() ?
-              '' : 
+              <div className="bg-white rounded shadow py-3 px-4">
+                <DeleteAccountComp />
+              </div>
+
+              
+              : 
               <div className="bg-white rounded shadow py-3 px-4">
               <h5 className="text-gray-500">Noter l'utilisateur</h5>
             <RatingComp 
