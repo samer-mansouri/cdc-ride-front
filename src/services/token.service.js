@@ -14,6 +14,11 @@ class TokenService {
       return user?.currentUser;
     }
 
+    getCurrentUserRole(){
+      const user = JSON.parse(localStorage.getItem("user"));
+      return user?.role;
+    }
+
     updateLocalAccessToken(token) {
       let user = JSON.parse(localStorage.getItem("user"));
       user.accessToken = token;

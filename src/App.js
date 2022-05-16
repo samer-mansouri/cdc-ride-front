@@ -14,6 +14,9 @@ import Logout from './components/Logout';
 import CurrentUserTrajets from './pages/CurrentUserTrajets';
 import ReservationsList from './pages/ReservationsList';
 import CovoituragesList from './pages/CovoituragesList';
+import UsersTable from './pages/Admin/UsersTable';
+import TrajetsTable from './pages/Admin/TrajetsTable';
+import CarsTable from './pages/Admin/CarsTable';
 
 function App() {
   return (
@@ -34,6 +37,9 @@ function App() {
           <CovoituragesList />  
         </Route>
         <Route path="/logout"><Logout /></Route>
+        <Route path="/admin-users"><UsersTable /></Route>
+        <Route path="/admin-trajets"><TrajetsTable /></Route>
+        <Route path="/admin-cars"><CarsTable /></Route>
       </Switch>
       
     </Router>

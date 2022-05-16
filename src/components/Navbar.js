@@ -117,18 +117,19 @@ export default function Navbar() {
             <NavLink to="/" className="text-base font-medium text-gray-500 hover:text-gray-900">
              Accueil
             </NavLink>
+           
+
+            
+            {
+           TokenService.getLocalAccessToken() && TokenService.getLocalRefreshToken() && TokenService.getUser() && TokenService.getUser().role === 'user' 
+           ? 
+           <>
             <NavLink to="/trajets" className="text-base font-medium text-gray-500 hover:text-gray-900">
             Trajets
             </NavLink>
             <NavLink to="/covoiturages" className="text-base font-medium text-gray-500 hover:text-gray-900">
             Covoiturages
             </NavLink>
-
-            
-            {
-           TokenService.getLocalAccessToken() && TokenService.getLocalRefreshToken() && TokenService.getUser()
-           ? 
-           <>
            <NavLink to={'/usertrajets'} className="text-base font-medium text-gray-500 hover:text-gray-900">
              Vos Trajets
             </NavLink>
@@ -137,6 +138,28 @@ export default function Navbar() {
             className="text-base font-medium text-gray-500 hover:text-black hover:cursor-pointer" >Déclarer</a>
             <NavLink to={'/profile/' + TokenService.getCurrentUserId()} className="text-base font-medium text-gray-500 hover:text-gray-900">
             <UserIcon className="h-6 w-6 inline mb-1" aria-hidden="true" /> Profile
+            </NavLink>
+            <NavLink to="/logout" className="text-base font-medium text-gray-500 hover:text-gray-900">
+            <LogoutIcon className="h-6 w-6 inline mb-1" aria-hidden="true" /> Se déconnecter
+            </NavLink>
+            </>
+  
+           : 
+          ''
+         }
+
+        {
+           TokenService.getLocalAccessToken() && TokenService.getLocalRefreshToken() && TokenService.getUser() && TokenService.getUser().role === 'admin' 
+           ? 
+           <>
+           <NavLink to={'/admin-users'} className="text-base font-medium text-gray-500 hover:text-gray-900">
+             Utilisateurs
+            </NavLink>
+            <NavLink to="/admin-trajets" className="text-base font-medium text-gray-500 hover:text-gray-900">
+             Trajets
+            </NavLink>
+            <NavLink to="/admin-cars" className="text-base font-medium text-gray-500 hover:text-gray-900">
+             Vehicules
             </NavLink>
             <NavLink to="/logout" className="text-base font-medium text-gray-500 hover:text-gray-900">
             <LogoutIcon className="h-6 w-6 inline mb-1" aria-hidden="true" /> Se déconnecter
