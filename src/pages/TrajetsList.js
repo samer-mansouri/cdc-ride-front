@@ -10,6 +10,7 @@ import TrajetService from '../services/trajet.service';
 import DetailledSearchForm from '../components/DetailledSearchForm';
 import TrajetAnnonce from '../components/TrajetAnnonce';
 import AddTrajet from '../components/AddTrajet';
+import TokenService from '../services/token.service';
 
 
 
@@ -97,7 +98,9 @@ function TrajetsList() {
                 RECHERCHE DÉTAILLÉ
                 </span>
               </button>
-              <button
+              {
+                TokenService.getCurrentUserRole() === 'Driver' ?
+                <button
                 onClick={() => showAddTrajet()}
                 className="group relative w-48 ml-2 flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-[#ffc65e] hover:bg-[#e0ae51] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#ffc65e]"
               >
@@ -106,7 +109,8 @@ function TrajetsList() {
                 </span>
                 AJOUTER TRAJET
                 </span>
-              </button>
+              </button> : ''
+              }
     </div>
     {
       simpleS && !detSearch &&  !addTrajet ?

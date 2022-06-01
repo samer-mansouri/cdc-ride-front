@@ -11,6 +11,7 @@ import DetailledSearchForm from '../components/DetailledSearchForm';
 import TrajetAnnonce from '../components/TrajetAnnonce';
 import AddCovoiturageForm from '../components/AddCovoiturageForm';
 import CovoiturageAnnonce from '../components/CovoiturageAnonce';
+import TokenService from '../services/token.service';
 
 
 
@@ -57,19 +58,22 @@ function CovoituragesList() {
     <Navbar />
     <div className="bg-gray-100 h-screen">
     <h1 className="font-bold text-center pt-8 mb-1  text-3xl text-gray-600">Liste des covoiturages publiés</h1>
-    <div className={ addCovoiturage ? "flex justify-center mt-8" : 'flex justify-center mt-8 mb-5'}>
+    {
+      TokenService.getCurrentUserRole() == 'Passenger' ?
+      <div className={ addCovoiturage ? "flex justify-center mt-8" : 'flex justify-center mt-8 mb-5'}>
 
-              <button
-                onClick={() => toggleAddCovoiturage()}
-                className="group relative w-48 ml-2 flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-[#ffc65e] hover:bg-[#e0ae51] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#ffc65e]"
-              >
-                <span className="ml-3">
-                <span className="absolute left-0 inset-y-0 flex items-center pl-3">
-                </span>
-                AJOUTER COVOITURAGE
-                </span>
-              </button>
-    </div>
+      <button
+        onClick={() => toggleAddCovoiturage()}
+        className="group relative w-48 ml-2 flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-[#ffc65e] hover:bg-[#e0ae51] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#ffc65e]"
+      >
+        <span className="ml-3">
+        <span className="absolute left-0 inset-y-0 flex items-center pl-3">
+        </span>
+        AJOUTER COVOITURAGE
+        </span>
+      </button>
+</div> : ''
+    }
     
     {
       addCovoiturage   ?

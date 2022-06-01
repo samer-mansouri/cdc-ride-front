@@ -6,6 +6,7 @@ import AuthService from '../services/auth.service';
 import { Redirect } from 'react-router-dom';
 import { useState } from 'react';
 import ExclamationAlertNew from '../components/ExclamationAlertNew';
+import ErrorAlert from '../components/ErrorAlert';
 
 const SignInSchema = Yup.object().shape({
     email: Yup.string().email('Invalid email').required('Email field is required'),
@@ -24,7 +25,7 @@ export default function Login() {
         })
         .catch(err => {
           console.log(err)
-          if(err.response.status === 404) {
+          if(err.response.status === 404 || err.response.status === 401) {
             setNotUser(true)
             setTimeout(() => {
               setNotUser(false)
@@ -44,10 +45,11 @@ export default function Login() {
               <div>
                 <h1 className="text-[#ffc65e] font-bold text-2xl text-center">RIDE</h1>
                 <h2 className="mt-2 text-center text-3xl font-extrabold text-gray-900">Se connecter à votre compte</h2>
+                
                 {
                   notUser ? 
                     <div className="mt-3">
-                      <ExclamationAlertNew 
+                      <ErrorAlert 
                       title="Ce compte n'existe pas"
                       message="Veuillez vérifier vos identifiants"
                     />  

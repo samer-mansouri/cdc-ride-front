@@ -82,6 +82,7 @@ export default function Register() {
             email: '',
             gender: '',
             permis:'',
+            role: '',
             password: '',
             password2: '',
             }}
@@ -200,6 +201,23 @@ export default function Register() {
                   className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900  focus:outline-none focus:ring-[#ffc65e] focus:border-[#ffc65e] focus:z-10 sm:text-sm"
                   placeholder="Permis"
                 />
+              </div>
+              <div>
+                <label htmlFor="gender" className="sr-only">
+                  Role
+                </label>
+                <Field
+                  id="role"
+                  as="select"
+                  name="role"
+                  required
+                  className="appearance-none rounded-none bg-white relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900  focus:outline-none focus:ring-[#ffc65e] focus:border-[#ffc65e] focus:z-10 sm:text-sm"
+                  placeholder="Role"
+                >
+                  <option value="" className="text-gray-500">Role</option>
+                  <option value="Passenger" className="text-gray-500">Passager</option>
+                 <option value="Driver" className="text-gray-500">Conducteur</option>
+                </Field>
               </div>
               <div>
                 <label htmlFor="password" className="sr-only">

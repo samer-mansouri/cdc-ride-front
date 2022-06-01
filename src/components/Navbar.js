@@ -121,18 +121,23 @@ export default function Navbar() {
 
             
             {
-           TokenService.getLocalAccessToken() && TokenService.getLocalRefreshToken() && TokenService.getUser() && TokenService.getUser().role === 'user' 
+           TokenService.getLocalAccessToken() && TokenService.getLocalRefreshToken() && TokenService.getUser() 
            ? 
            <>
-            <NavLink to="/trajets" className="text-base font-medium text-gray-500 hover:text-gray-900">
-            Trajets
+           <NavLink to="/trajets" className="text-base font-medium text-gray-500 hover:text-gray-900">
+             Trajets
             </NavLink>
+
             <NavLink to="/covoiturages" className="text-base font-medium text-gray-500 hover:text-gray-900">
             Covoiturages
             </NavLink>
-           <NavLink to={'/usertrajets'} className="text-base font-medium text-gray-500 hover:text-gray-900">
+           {
+              TokenService.getUser().role === 'Driver' 
+              ?
+              <NavLink to={'/usertrajets'} className="text-base font-medium text-gray-500 hover:text-gray-900">
              Vos Trajets
-            </NavLink>
+            </NavLink> : ''
+           }
             <a 
               onClick={() => setShowModal(true)}
             className="text-base font-medium text-gray-500 hover:text-black hover:cursor-pointer" >Déclarer</a>

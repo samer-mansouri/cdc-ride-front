@@ -105,6 +105,9 @@ export default function SingleTrajetModal({ openModal, changeShowModalState, tra
                 
               </div>
               {
+                TokenService.getCurrentUserRole() == "Passenger" ?
+                <>
+                {
                     localTrajetStatus != "pending" ?
                     
                     <>
@@ -128,6 +131,8 @@ export default function SingleTrajetModal({ openModal, changeShowModalState, tra
                   } 
                     </> : ''
                   }    
+                </> : ''
+              }
                 </div>
               <div className="mt-5 ml-4">
                 <p>Lieu de départ: {trajet.placeOfDeparture}</p>

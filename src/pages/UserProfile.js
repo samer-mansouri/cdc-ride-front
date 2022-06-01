@@ -211,7 +211,7 @@ export default function UserProfile(props) {
          {
            id === TokenService.getCurrentUserId()
            ?
-           <div className="max-w-3xl flex justify-center ml-20 px-4 sm:px-6 md:px-8 mt-5">
+           <div className="max-w-3xl flex justify-center ml-44 px-4 sm:px-6 md:px-8 mt-5">
            <UpdateProfilePic 
                  updateProfilePicture={updateProfilePicture}
            />
@@ -268,9 +268,12 @@ export default function UserProfile(props) {
                       <div className="sm:col-span-1">
                         <dt className="text-sm font-medium text-gray-500">Permis</dt>
                         <dd className="mt-1 text-sm text-gray-900">{user.permis}
-                          <p className='text-gray-500 underline hover:cursor-pointer'
+                          {
+                            user.permisPic && user.role == 'Driver' ? 
+                            <p className='text-gray-500 underline hover:cursor-pointer'
                             onClick={() => togglePermisPicModal()}
-                          >Afficher Image</p>
+                          >Afficher Image</p> : ''
+                          }
                         </dd>
                       </div>
                       <div className="sm:col-span-1">
@@ -282,7 +285,7 @@ export default function UserProfile(props) {
                         <dd className="mt-1 text-sm text-gray-900">{user.gender == "Male" ? "Homme" : "Femme"}</dd>
                       </div>
                       {
-                        id === TokenService.getCurrentUserId()
+                        id === TokenService.getCurrentUserId() && TokenService.getCurrentUserRole() == "Driver"
                         ?
                         <div className="flex justify-end">
                           <button
@@ -291,7 +294,9 @@ export default function UserProfile(props) {
                             className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-[#ffc65e] hover:bg-[#e0ae51] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#ffc65e]"
                           >
                             <span className="absolute left-0 inset-y-0 flex items-center pl-3">
-                            </span>Mettre à jour la photo du permis
+                            </span>{
+                              user.permisPic ? 'Mettre à jour la photo du permis' : 'Ajouter une photo du permis'
+                            }
                           </button>  
                         </div>
                         : ''
@@ -318,7 +323,11 @@ export default function UserProfile(props) {
            
             </div>
 
-            <section aria-labelledby="timeline-title" className="lg:col-start-3 lg:col-span-1">
+            {
+              
+              user.role == 'Driver'
+              ?
+              <section aria-labelledby="timeline-title" className="lg:col-start-3 lg:col-span-1">
             
 
 
@@ -356,7 +365,8 @@ export default function UserProfile(props) {
               </div>
 
               
-            </section>
+            </section> : ''
+            }
           </div>
         </main>
       </div>
