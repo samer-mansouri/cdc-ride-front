@@ -16,12 +16,15 @@ export default function Login() {
 
     const [loggedIn, setLoggedIn] = useState(false);
     const [notUser, setNotUser] = useState(false);
+    const [role, setRole] = useState('');
 
     const sendData = (data) => {
         AuthService.login(data)
         .then(res => {
-          console.log(res)
+          console.log(res.role)
+          setRole(res.role)
           setLoggedIn(true)
+          
         })
         .catch(err => {
           console.log(err)
@@ -34,8 +37,10 @@ export default function Login() {
         })    
     }
 
-    if(loggedIn){
-     return <Redirect to="/trajets" />
+    if(loggedIn && role == 'admin') {
+     return <Redirect to="/admin-trajets" />
+    } else if (loggedIn && role != 'admin') {
+      return <Redirect to="/trajets" />
     } else {
       return (
         <>
