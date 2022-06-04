@@ -28,6 +28,26 @@ class AdminService {
     deleteVehicule(id){
         return api.delete(`/admin_vehicules/${id}`);
     }
+
+    approveUser(id){
+        return api.post(`/admin_users/${id}`);
+    }
+
+    confirmVehicule(id){
+        return api.post(`/admin_vehicules/${id}`);
+    }
+
+    confirmTrajet(id){
+        return api.post(`/admin_trajets/${id}`);
+    }
+
+    getDeclarations() {
+        return api.get('/admin_declarations');
+    }
+
+    deleteDeclaration(id){
+        return api.delete(`/admin_declarations/${id}`);
+    }
         
 }
 

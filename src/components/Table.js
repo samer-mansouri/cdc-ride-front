@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { useTable, usePagination, useGlobalFilter, useAsyncDebounce  } from "react-table";
 import GlobalFilter from "./GlobalFilter";
 
-function Table({ columns, data }) {
+function Table({ table }) {
+
+  const columns = useMemo(() => table.columns, [table]);
+  const data = useMemo(() => table.rows, [table]);
   // Use the state and functions returned from useTable to build your UI
   const {
     getTableProps,

@@ -17,6 +17,7 @@ import CovoituragesList from './pages/CovoituragesList';
 import UsersTable from './pages/Admin/UsersTable';
 import TrajetsTable from './pages/Admin/TrajetsTable';
 import CarsTable from './pages/Admin/CarsTable';
+import DeclarationsTable from './pages/Admin/DeclarationsTable';
 
 function App() {
   return (
@@ -40,6 +41,7 @@ function App() {
         <Route path="/admin-users"><UsersTable /></Route>
         <Route path="/admin-trajets"><TrajetsTable /></Route>
         <Route path="/admin-cars"><CarsTable /></Route>
+        <Route path="/admin-declarations"><DeclarationsTable /></Route>
       </Switch>
       
     </Router>

@@ -107,7 +107,7 @@ export default function Navbar() {
             </NavLink>
           </div>
           <div className="-mr-2 -my-2 md:hidden">
-            <Popover.Button className="bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500">
+            <Popover.Button className="bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-[#ffc65e]">
               <span className="sr-only">Open menu</span>
               <MenuIcon className="h-6 w-6" aria-hidden="true" />
             </Popover.Button>
@@ -121,7 +121,7 @@ export default function Navbar() {
 
             
             {
-           TokenService.getLocalAccessToken() && TokenService.getLocalRefreshToken() && TokenService.getUser() 
+           TokenService.getLocalAccessToken() && TokenService.getLocalRefreshToken() && TokenService.getUser() && TokenService.getUser().role != 'admin' 
            ? 
            <>
            <NavLink to="/trajets" className="text-base font-medium text-gray-500 hover:text-gray-900">
@@ -130,13 +130,14 @@ export default function Navbar() {
 
             <NavLink to="/covoiturages" className="text-base font-medium text-gray-500 hover:text-gray-900">
             Covoiturages
-            </NavLink>
+            </NavLink> 
            {
               TokenService.getUser().role === 'Driver' 
               ?
               <NavLink to={'/usertrajets'} className="text-base font-medium text-gray-500 hover:text-gray-900">
              Vos Trajets
-            </NavLink> : ''
+            </NavLink> : 
+            ''
            }
             <a 
               onClick={() => setShowModal(true)}
@@ -150,7 +151,23 @@ export default function Navbar() {
             </>
   
            : 
-          ''
+           <>
+            {
+              !TokenService.getLocalAccessToken() || !TokenService.getLocalRefreshToken() || !TokenService.getUser()
+              ?
+              <>
+           <a href="#valeurs" className="text-base font-medium text-gray-500 hover:text-gray-900">
+            Nos valeurs
+          </a>
+           <a href="#team" className="text-base font-medium text-gray-500 hover:text-gray-900">
+           Équipe
+          </a>
+          <a href="#loc" className="text-base font-medium text-gray-500 hover:text-gray-900">
+          Localisation
+         </a>
+           </> : ''
+            }
+           </>
          }
 
         {
@@ -166,6 +183,7 @@ export default function Navbar() {
             <NavLink to="/admin-cars" className="text-base font-medium text-gray-500 hover:text-gray-900">
              Vehicules
             </NavLink>
+            <NavLink to="admin-declarations" className="text-base font-medium text-gray-500 hover:text-gray-900">Déclarations</NavLink>
             <NavLink to="/logout" className="text-base font-medium text-gray-500 hover:text-gray-900">
             <LogoutIcon className="h-6 w-6 inline mb-1" aria-hidden="true" /> Se déconnecter
             </NavLink>
@@ -212,63 +230,108 @@ export default function Navbar() {
             <div className="pt-5 pb-6 px-5">
               <div className="flex items-center justify-between">
                 <div>
-                <h1 className="text-[#ffc65e] font-bold text-2xl">RIDRE</h1>
+                <h1 className="text-[#ffc65e] font-bold text-2xl">RIDE</h1>
 
                 </div>
                 <div className="-mr-2">
-                  <Popover.Button className="bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500">
+                  <Popover.Button className="bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-[#ffc65e]">
                     <span className="sr-only">Close menu</span>
                     <XIcon className="h-6 w-6" aria-hidden="true" />
                   </Popover.Button>
                 </div>
               </div>
-              <div className="mt-6">
-                <nav className="grid gap-y-8">
-                  {solutions.map((item) => (
-                    <a
-                      key={item.name}
-                      href={item.href}
-                      className="-m-3 p-3 flex items-center rounded-md hover:bg-gray-50"
-                    >
-                      <item.icon className="flex-shrink-0 h-6 w-6 text-indigo-600" aria-hidden="true" />
-                      <span className="ml-3 text-base font-medium text-gray-900">{item.name}</span>
-                    </a>
-                  ))}
-                </nav>
-              </div>
+            
+            
             </div>
             <div className="py-6 px-5 space-y-6">
-              <div className="grid grid-cols-2 gap-y-4 gap-x-8">
-                <a href="#" className="text-base font-medium text-gray-900 hover:text-gray-700">
-                  Pricing
-                </a>
+              <div className="grid grid-cols-1 gap-y-4 gap-x-8">
+              <NavLink to="/" className="text-base font-medium text-gray-500 hover:text-gray-900">
+             Accueil
+            </NavLink>
+           
 
-                <a href="#" className="text-base font-medium text-gray-900 hover:text-gray-700">
-                  Docs
-                </a>
-                {resources.map((item) => (
-                  <a
-                    key={item.name}
-                    href={item.href}
-                    className="text-base font-medium text-gray-900 hover:text-gray-700"
-                  >
-                    {item.name}
-                  </a>
-                ))}
-              </div>
-              <div>
-                <a
-                  href="#"
-                  className="w-full flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-[#ffc65e] hover:bg-[#e0ae51]"
-                >
-                  S'inscrire
-                </a>
-                <p className="mt-6 text-center text-base font-medium text-gray-500">
-                  Vous avez déja un compte?{' '}
-                  <a href="#" className="text-[#ffc65e] hover:text-indigo-500">
-                    Se connecter
-                  </a>
-                </p>
+            
+            {
+           TokenService.getLocalAccessToken() && TokenService.getLocalRefreshToken() && TokenService.getUser() && TokenService.getUser().role != 'admin'
+           ? 
+           <>
+           <NavLink to="/trajets" className="text-base font-medium text-gray-500 hover:text-gray-900">
+             Trajets
+            </NavLink>
+
+            <NavLink to="/covoiturages" className="text-base font-medium text-gray-500 hover:text-gray-900">
+            Covoiturages
+            </NavLink> 
+           {
+              TokenService.getUser().role === 'Driver' 
+              ?
+              <NavLink to={'/usertrajets'} className="text-base font-medium text-gray-500 hover:text-gray-900">
+             Vos Trajets
+            </NavLink> : 
+            ''
+           }
+            <a 
+              onClick={() => setShowModal(true)}
+            className="text-base font-medium text-gray-500 hover:text-black hover:cursor-pointer" >Déclarer</a>
+            <hr className="shadow"/>
+            <NavLink to={'/profile/' + TokenService.getCurrentUserId()} className="text-base font-medium text-gray-500 hover:text-gray-900">
+            <UserIcon className="h-6 w-6 inline mb-1" aria-hidden="true" /> Profile
+            </NavLink>
+            <NavLink to="/logout" className="text-base font-medium text-gray-500 hover:text-gray-900">
+            <LogoutIcon className="h-6 w-6 inline mb-1" aria-hidden="true" /> Se déconnecter
+            </NavLink>
+            </>
+  
+           : 
+           <>
+           <a href="#valeurs" className="text-base font-medium text-gray-500 hover:text-gray-900">
+            Nos valeurs
+          </a>
+           <a href="#team" className="text-base font-medium text-gray-500 hover:text-gray-900">
+           Équipe
+          </a>
+          <a href="#loc" className="text-base font-medium text-gray-500 hover:text-gray-900">
+          Localisation
+         </a>
+         <div className="hidden md:flex items-center justify-end md:flex-1 lg:w-0">
+           <NavLink to="/login" className="whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900">
+             Se connecter
+           </NavLink>
+           <NavLink
+             to="/signup"
+             className="ml-8 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-[#ffc65e] hover:bg-[#e0ae51]"
+           >
+             S'inscrire
+           </NavLink>
+         </div>
+           </>
+         }
+
+        {
+           TokenService.getLocalAccessToken() && TokenService.getLocalRefreshToken() && TokenService.getUser() && TokenService.getUser().role === 'admin' 
+           ? 
+           <>
+           <NavLink to={'/admin-users'} className="text-base font-medium text-gray-500 hover:text-gray-900">
+             Utilisateurs
+            </NavLink>
+            <NavLink to="/admin-trajets" className="text-base font-medium text-gray-500 hover:text-gray-900">
+             Trajets
+            </NavLink>
+            <NavLink to="/admin-cars" className="text-base font-medium text-gray-500 hover:text-gray-900">
+             Vehicules
+            </NavLink>
+            <NavLink to="admin-declarations" className="text-base font-medium text-gray-500 hover:text-gray-900">Déclarations</NavLink>
+
+            <NavLink to="/logout" className="text-base font-medium text-gray-500 hover:text-gray-900">
+            <LogoutIcon className="h-6 w-6 inline mb-1" aria-hidden="true" /> Se déconnecter
+            </NavLink>
+            </>
+  
+           : 
+          ''
+         }
+
+
               </div>
             </div>
           </div>
