@@ -31,7 +31,7 @@ function App() {
         <PublicRoute path="/login" component={Login} />
         <PublicRoute path="/signup" component={Register} />
         
-        <ProtectedRoute path="/trajets" component={TrajetsList} />
+        <Route path="/trajets" component={TrajetsList} />
         <ProtectedRoute path="/profile/:id" component={UserProfile} />
         <ProtectedRoute path="/usertrajets" component={CurrentUserTrajets} />
         

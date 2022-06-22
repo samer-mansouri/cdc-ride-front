@@ -38,9 +38,15 @@ function TrajetsList() {
   }
   
   const fetchData = () => {
-    TrajetService.getAllTrajets()
+    if(TokenService.getUser()){
+      TrajetService.getAllTrajets()
     .then(res => { console.log(res); setData(res.data) })
     .catch(error => {console.log(error)})
+    } else {
+      TrajetService.getAllTrajetsPublic()
+    .then(res => { console.log(res); setData(res.data) })
+    .catch(error => {console.log(error)})
+    }
   }
 
   const fetchUserConnectedCars = () => {
@@ -69,7 +75,9 @@ function TrajetsList() {
 
   useEffect(() => {
     fetchData();
-    fetchUserConnectedCars();
+    if(TokenService.getUser()){
+      fetchUserConnectedCars();
+    }
   }, [reload]);
 
   return (
@@ -99,7 +107,7 @@ function TrajetsList() {
                 </span>
               </button>
               {
-                TokenService.getCurrentUserRole() === 'Driver' ?
+                TokenService.getUser() && TokenService.getCurrentUserRole() === 'Driver' ?
                 <button
                 onClick={() => showAddTrajet()}
                 className="group relative w-48 ml-2 flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-[#ffc65e] hover:bg-[#e0ae51] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#ffc65e]"
@@ -125,7 +133,7 @@ function TrajetsList() {
         : ''
     }
     {
-      addTrajet && !simpleS && !detSearch  ?
+      addTrajet && !simpleS && !detSearch && TokenService.getUser()  ?
       <AddTrajet 
       vehicules={cars}
       updateTrajetsList={updateTrajetsList}

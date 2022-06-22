@@ -4,6 +4,10 @@ class TrajetService {
   getAllTrajets() {
     return api.get('/trajetsres');
   }
+  
+  getAllTrajetsPublic(){
+    return api.get('/trajets');
+  }
 
   getTrajet(id){
       return api.get(`/trajet/${id}`);

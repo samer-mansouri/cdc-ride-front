@@ -61,16 +61,19 @@ export default function Navbar() {
             <NavLink to="/" className="text-base font-medium text-gray-500 hover:text-gray-900">
              Accueil
             </NavLink>
-           
+            {
+              !TokenService.getUser() || TokenService.getCurrentUserRole() !== 'admin' ?
+              <NavLink to="/trajets" className="text-base font-medium text-gray-500 hover:text-gray-900">
+             Trajets
+            </NavLink> : ''
+            }
 
             
             {
            TokenService.getLocalAccessToken() && TokenService.getLocalRefreshToken() && TokenService.getUser() && TokenService.getUser().role != 'admin' 
            ? 
            <>
-           <NavLink to="/trajets" className="text-base font-medium text-gray-500 hover:text-gray-900">
-             Trajets
-            </NavLink>
+           
 
             <NavLink to="/covoiturages" className="text-base font-medium text-gray-500 hover:text-gray-900">
             Covoiturages
